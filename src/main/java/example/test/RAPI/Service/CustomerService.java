@@ -1,5 +1,7 @@
-package example.test.RAPI;
+package example.test.RAPI.Service;
 
+import example.test.RAPI.Entity.Customer;
+import example.test.RAPI.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

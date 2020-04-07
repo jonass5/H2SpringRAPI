@@ -1,5 +1,7 @@
-package example.test.RAPI;
+package example.test.RAPI.Controller;
 
+import example.test.RAPI.Entity.Customer;
+import example.test.RAPI.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +33,7 @@ public class CustomerController {
         customerService.createCustomer(c);
     }
 
+    //Update Customer(+Rights)
     @RequestMapping(method = RequestMethod.PUT, value = "/customers/update")
     public void updateCustomer(@RequestBody Customer c) {
         customerService.updateCustomer(c);
