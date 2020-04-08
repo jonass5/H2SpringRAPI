@@ -1,17 +1,21 @@
 package example.test.RAPI.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "Customer")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.StringIdGenerator.class,
+        property = "customerClassID")
 public class Customer {
 
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "CUSTOMERID")
     private int customerid;
 
     @Column(name = "NAME")
@@ -30,7 +34,6 @@ public class Customer {
     @OneToMany(mappedBy = "orderid")
     private Set<Order> orderList;
 
-    @JsonIgnore
     public Set<Order> getOrderList() {
         return orderList;
     }
@@ -56,8 +59,8 @@ public class Customer {
         this.age = age;
     }
 
-    public Customer(int id, String name, String nachname, int age, CustomerRights customerRights) {
-        this.customerid = id;
+    public Customer(int customerid, String name, String nachname, int age, CustomerRights customerRights) {
+        this.customerid = customerid;
         this.name = name;
         this.nachname = nachname;
         this.age = age;
@@ -68,8 +71,8 @@ public class Customer {
         return customerid;
     }
 
-    public void setId(int id) {
-        this.customerid = id;
+    public void setId(int customerid) {
+        this.customerid = customerid;
     }
 
     public String getName() {

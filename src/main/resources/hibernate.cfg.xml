@@ -17,5 +17,6 @@
         <mapping class="example.test.RAPI.Entity.Order"></mapping>
         <mapping class="example.test.RAPI.Entity.Order_Artikel"></mapping>
         <mapping class="example.test.RAPI.Entity.Artikel"></mapping>
+        <mapping class="example.test.RAPI.Entity.IDClass.Order_ArtikelIdClass"></mapping>
     </session-factory>
 </hibernate-configuration>

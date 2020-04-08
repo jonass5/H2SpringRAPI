@@ -1,19 +1,25 @@
 package example.test.RAPI.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "ARTIKELORDER")
+@Table(name = "BESTELLUNG")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.StringIdGenerator.class,
+        property = "orderClassID")
 public class Order {
 
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ORDERID")
     private int orderid;
 
     @ManyToOne
-    @JoinColumn(name = "customerid")
+    @JoinColumn(name = "CUSTOMERID")
     private Customer customer;
 
     @OneToMany(mappedBy = "orderid")
@@ -47,7 +53,7 @@ public class Order {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomerid(Customer customer) {
         this.customer = customer;
     }
 }

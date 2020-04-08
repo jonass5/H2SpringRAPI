@@ -18,14 +18,14 @@ public class CustomerController {
         return customerService.getAllCustomer();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/customers/{id}")
-    public Customer getCustomer(@PathVariable int id) {
-        return customerService.getCustomerById(id);
+    @RequestMapping(method = RequestMethod.GET, value = "/customers/{customerid}")
+    public Customer getCustomer(@PathVariable int customerid) {
+        return customerService.getCustomerById(customerid);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/customers/delete/{id}")
-    public void deleteCustomer(@PathVariable int id) {
-        customerService.deleteCustomer(id);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/customers/delete/{customerid}")
+    public void deleteCustomer(@PathVariable int customerid) {
+        customerService.deleteCustomer(customerid);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/customers/add")

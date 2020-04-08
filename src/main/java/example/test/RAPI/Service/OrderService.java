@@ -12,7 +12,10 @@ import java.util.List;
 public class OrderService {
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private Order_ArtikelService orderArtikelService;
 
     public List<Order> getAllOrder() {
         List<Order> list = new ArrayList<>();
@@ -20,8 +23,8 @@ public class OrderService {
         return list;
     }
 
-    public Order getOrderById(int id) {
-        return orderRepository.findById(id).get();
+    public Order getOrderById(int orderid) {
+        return orderRepository.findById(orderid).get();
     }
 
     public void createOrder(Order c) {
@@ -29,13 +32,22 @@ public class OrderService {
     }
 
     public void updateOrder(Order c) {
+//        List<Order_Artikel> list = new ArrayList<>();
+//        c.getArtikelList().stream().forEach(list::add);
+//
+//        for (Order_Artikel oa : list) {
+//            if (!orderArtikelService.Order_ArtikelisExisting(c.getOrderid(), oa.getArtikelid().getArtikelid())) {
+//                orderArtikelService.createOrder_Artikel(oa);
+//            }
+//        }
+
         if (getOrderById(c.getOrderid()) != null) {
             orderRepository.save(c);
         }
     }
 
-    public void deleteOrder(int id) {
-        orderRepository.deleteById(id);
+    public void deleteOrder(int orderid) {
+        orderRepository.deleteById(orderid);
     }
 
 

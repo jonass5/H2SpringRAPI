@@ -20,8 +20,8 @@ public class CustomerService {
         return list;
     }
 
-    public Customer getCustomerById(int id) {
-        return customerRepository.findById(id).get();
+    public Customer getCustomerById(int customerid) {
+        return customerRepository.findById(customerid).get();
     }
 
     public void createCustomer(Customer c) {
@@ -34,7 +34,7 @@ public class CustomerService {
         }
     }
 
-    public void deleteCustomer(int id) {
-        customerRepository.deleteById(id);
+    public void deleteCustomer(int customerid) {
+        customerRepository.deleteById(customerid);
     }
 }

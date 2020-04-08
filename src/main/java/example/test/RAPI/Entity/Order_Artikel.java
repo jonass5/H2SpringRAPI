@@ -1,6 +1,7 @@
 package example.test.RAPI.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import example.test.RAPI.Entity.IDClass.Order_ArtikelIdClass;
 
 import javax.persistence.*;
@@ -8,6 +9,9 @@ import javax.persistence.*;
 @Entity
 @IdClass(Order_ArtikelIdClass.class)
 @Table(name = "Order_Artikel")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.StringIdGenerator.class,
+        property = "order_ArtikelClassID")
 public class Order_Artikel {
 
     @Id
@@ -52,7 +56,6 @@ public class Order_Artikel {
         this.orderid = order;
     }
 
-    @JsonIgnore
     public Order getOrderid() {
         return orderid;
     }

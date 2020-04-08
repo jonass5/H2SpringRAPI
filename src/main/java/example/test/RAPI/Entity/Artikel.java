@@ -1,27 +1,22 @@
 package example.test.RAPI.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "ARTIKEL")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.StringIdGenerator.class,
+        property = "artikelClassID")
 public class Artikel {
 
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ARTIKELID")
     private int artikelid;
-
-    @JsonIgnore
-    public Set<Order_Artikel> getOrderList() {
-        return orderList;
-    }
-
-    public void setOrderList(Set<Order_Artikel> orderList) {
-        this.orderList = orderList;
-    }
 
     @OneToMany(mappedBy = "artikelid")
     private Set<Order_Artikel> orderList;
@@ -63,4 +58,13 @@ public class Artikel {
         this.name = name;
         this.preis = preis;
     }
+
+    public Set<Order_Artikel> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(Set<Order_Artikel> orderList) {
+        this.orderList = orderList;
+    }
+
 }
