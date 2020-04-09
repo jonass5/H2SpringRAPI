@@ -28,9 +28,9 @@ public class Order_ArtikelController {
         orderArtikelService.createOrder_Artikel(o);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/orderartikel/delete/")
-    public void deleteOrderArtikel(Order_Artikel o) {
-        orderArtikelService.deleteOrder_Artikel(o);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/orderartikel/delete/{orderid}-{artikelid}")
+    public void deleteOrderArtikel(@PathVariable int orderid, @PathVariable int artikelid) {
+        orderArtikelService.deleteOrder_Artikel(orderid, artikelid);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/orderartikel/update")

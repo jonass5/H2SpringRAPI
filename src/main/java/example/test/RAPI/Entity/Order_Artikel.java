@@ -1,17 +1,18 @@
 package example.test.RAPI.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import example.test.RAPI.Entity.IDClass.Order_ArtikelIdClass;
+import example.test.RAPI.JsonDeserializer.Order_ArtikelJsonDeserializer;
+import example.test.RAPI.JsonSerializer.Order_ArtikelJsonSerializer;
 
 import javax.persistence.*;
 
 @Entity
 @IdClass(Order_ArtikelIdClass.class)
 @Table(name = "Order_Artikel")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.StringIdGenerator.class,
-        property = "order_ArtikelClassID")
+@JsonSerialize(using = Order_ArtikelJsonSerializer.class)
+@JsonDeserialize(using = Order_ArtikelJsonDeserializer.class)
 public class Order_Artikel {
 
     @Id

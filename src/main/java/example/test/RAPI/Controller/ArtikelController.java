@@ -23,7 +23,7 @@ public class ArtikelController {
         return artikelService.getArtikelById(artikelid);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/artikel/delete/{customerid}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/artikel/delete/{artikelid}")
     public void deleteArtikel(@PathVariable int artikelid) {
         artikelService.deleteArtikel(artikelid);
     }

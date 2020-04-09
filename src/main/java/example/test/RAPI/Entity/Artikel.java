@@ -1,16 +1,17 @@
 package example.test.RAPI.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import example.test.RAPI.JsonDeserializer.ArtikelJsonDeserializer;
+import example.test.RAPI.JsonSerializer.ArtikelJsonSerializer;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "ARTIKEL")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.StringIdGenerator.class,
-        property = "artikelClassID")
+@JsonSerialize(using = ArtikelJsonSerializer.class)
+@JsonDeserialize(using = ArtikelJsonDeserializer.class)
 public class Artikel {
 
     @Id
@@ -25,7 +26,7 @@ public class Artikel {
     private String name;
 
     @Column(name = "PREIS")
-    private String preis;
+    private double preis;
 
     public int getArtikelid() {
         return artikelid;
@@ -43,18 +44,28 @@ public class Artikel {
         this.name = name;
     }
 
-    public String getPreis() {
+    public double getPreis() {
         return preis;
     }
 
     public Artikel() {
     }
 
-    public void setPreis(String preis) {
+    public Artikel(int artikelid, String name, double preis) {
+        this.artikelid = artikelid;
+        this.name = name;
         this.preis = preis;
     }
 
-    public Artikel(String name, String preis) {
+    public Artikel(int artikelid) {
+        this.artikelid = artikelid;
+    }
+
+    public void setPreis(double preis) {
+        this.preis = preis;
+    }
+
+    public Artikel(String name, double preis) {
         this.name = name;
         this.preis = preis;
     }

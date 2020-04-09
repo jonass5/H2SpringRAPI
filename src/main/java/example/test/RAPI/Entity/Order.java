@@ -1,16 +1,17 @@
 package example.test.RAPI.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import example.test.RAPI.JsonDeserializer.OrderJsonDeserializer;
+import example.test.RAPI.JsonSerializer.OrderJsonSerializer;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "BESTELLUNG")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.StringIdGenerator.class,
-        property = "orderClassID")
+@JsonSerialize(using = OrderJsonSerializer.class)
+@JsonDeserialize(using = OrderJsonDeserializer.class)
 public class Order {
 
     @Id
@@ -29,7 +30,21 @@ public class Order {
         return orderid;
     }
 
+    public Order(int orderid, Customer customer, Set<Order_Artikel> artikelList) {
+        this.orderid = orderid;
+        this.customer = customer;
+        this.artikelList = artikelList;
+    }
+
     public Order() {
+    }
+
+    public Order(int orderid) {
+        this.orderid = orderid;
+    }
+
+    public Order(Customer customer) {
+        this.customer = customer;
     }
 
     public Order(Set<Order_Artikel> artikelList, Customer customer) {

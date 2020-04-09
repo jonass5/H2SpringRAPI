@@ -1,16 +1,14 @@
 package example.test.RAPI.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import example.test.RAPI.JsonSerializer.CustomerJsonSerializer;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "Customer")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.StringIdGenerator.class,
-        property = "customerClassID")
+@JsonSerialize(using = CustomerJsonSerializer.class)
 public class Customer {
 
     @Id
@@ -21,6 +19,10 @@ public class Customer {
     @Column(name = "NAME")
     private String name;
 
+    public Customer(int customerid) {
+        this.customerid = customerid;
+    }
+
     @Column(name = "NACHNAME")
     private String nachname;
 
@@ -29,7 +31,7 @@ public class Customer {
 
     @ManyToOne
     @JoinColumn(name = "customerrightid")
-    private CustomerRights customerRights;
+    private CustomerRight customerRights;
 
     @OneToMany(mappedBy = "orderid")
     private Set<Order> orderList;
@@ -42,11 +44,11 @@ public class Customer {
         this.orderList = orderList;
     }
 
-    public CustomerRights getCustomerRights() {
+    public CustomerRight getCustomerRights() {
         return customerRights;
     }
 
-    public void setCustomerRights(CustomerRights customerRights) {
+    public void setCustomerRights(CustomerRight customerRights) {
         this.customerRights = customerRights;
     }
 
@@ -59,7 +61,7 @@ public class Customer {
         this.age = age;
     }
 
-    public Customer(int customerid, String name, String nachname, int age, CustomerRights customerRights) {
+    public Customer(int customerid, String name, String nachname, int age, CustomerRight customerRights) {
         this.customerid = customerid;
         this.name = name;
         this.nachname = nachname;

@@ -1,6 +1,6 @@
 package example.test.RAPI.Service;
 
-import example.test.RAPI.Entity.CustomerRights;
+import example.test.RAPI.Entity.CustomerRight;
 import example.test.RAPI.Repository.CustomerRightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,21 +14,21 @@ public class CustomerRightService {
     @Autowired
     private CustomerRightRepository customerRightRepository;
 
-    public List<CustomerRights> getAllCustomerRights() {
-        List<CustomerRights> list = new ArrayList<>();
+    public List<CustomerRight> getAllCustomerRights() {
+        List<CustomerRight> list = new ArrayList<>();
         customerRightRepository.findAll().forEach(list::add);
         return list;
     }
 
-    public CustomerRights getCustomerRightById(int customerRightsid) {
+    public CustomerRight getCustomerRightById(int customerRightsid) {
         return customerRightRepository.findById(customerRightsid).get();
     }
 
-    public void createCustomerRight(CustomerRights c) {
+    public void createCustomerRight(CustomerRight c) {
         customerRightRepository.save(c);
     }
 
-    public void updateCustomerRight(CustomerRights c) {
+    public void updateCustomerRight(CustomerRight c) {
         if (getCustomerRightById(c.getId()) != null) {
             customerRightRepository.save(c);
         }

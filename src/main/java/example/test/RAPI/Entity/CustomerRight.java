@@ -1,22 +1,23 @@
 package example.test.RAPI.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import example.test.RAPI.JsonDeserializer.CustomerRightJsonDeserializer;
+import example.test.RAPI.JsonSerializer.CustomerRightsJsonSerializer;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "Customerright")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.StringIdGenerator.class,
-        property = "customerRightClassID")
-public class CustomerRights {
+@JsonSerialize(using = CustomerRightsJsonSerializer.class)
+@JsonDeserialize(using = CustomerRightJsonDeserializer.class)
+public class CustomerRight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "CUSTOMERRIGHTID")
-    private int customerrightid;
+    public int customerrightid;
 
     @OneToMany(mappedBy = "customerid")
     private Set<Customer> customers;
@@ -28,12 +29,16 @@ public class CustomerRights {
         return customers;
     }
 
-    public CustomerRights(int customerrightid, String name) {
+    public CustomerRight(String name) {
+        this.name = name;
+    }
+
+    public CustomerRight(int customerrightid, String name) {
         this.customerrightid = customerrightid;
         this.name = name;
     }
 
-    public CustomerRights() {
+    public CustomerRight() {
     }
 
     public void setCustomers(Set<Customer> customers) {
@@ -42,10 +47,6 @@ public class CustomerRights {
 
     public int getId() {
         return customerrightid;
-    }
-
-    public CustomerRights(String name) {
-        this.name = name;
     }
 
     public void setId(int customerrightid) {

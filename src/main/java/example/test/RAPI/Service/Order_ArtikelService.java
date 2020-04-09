@@ -35,8 +35,8 @@ public class Order_ArtikelService {
 //        }
     }
 
-    public void deleteOrder_Artikel(Order_Artikel o) {
-        orderArtikelRepository.delete(o);
+    public void deleteOrder_Artikel(int orderid, int artikelid) {
+        orderArtikelRepository.deleteById(new Order_ArtikelIdClass(orderid, artikelid));
     }
 
     public boolean Order_ArtikelisExisting(int orderid, int artikelid) {
