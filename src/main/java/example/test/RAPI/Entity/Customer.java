@@ -1,6 +1,8 @@
 package example.test.RAPI.Entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import example.test.RAPI.JsonDeserializer.CustomerJsonDeserialize;
 import example.test.RAPI.JsonSerializer.CustomerJsonSerializer;
 
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name = "Customer")
 @JsonSerialize(using = CustomerJsonSerializer.class)
+@JsonDeserialize(using = CustomerJsonDeserialize.class)
 public class Customer {
 
     @Id
@@ -59,6 +62,13 @@ public class Customer {
         this.name = name;
         this.nachname = nachname;
         this.age = age;
+    }
+
+    public Customer(String name, String nachname, int age, CustomerRight customerRights) {
+        this.name = name;
+        this.nachname = nachname;
+        this.age = age;
+        this.customerRights = customerRights;
     }
 
     public Customer(int customerid, String name, String nachname, int age, CustomerRight customerRights) {

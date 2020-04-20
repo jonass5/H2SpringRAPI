@@ -30,7 +30,10 @@ public class OrderJsonDeserializer extends StdDeserializer<Order> {
         JsonNode node = jp.getCodec().readTree(jp);
 
         ObjectNode customernode = (ObjectNode) node.get("Customer");
-        ArrayNode artikellistnode = (ArrayNode) node.get("Artikellist");
+
+        ArrayNode artikellistnode = null;
+        if (!node.get("Artikellist").isNull())
+            artikellistnode = (ArrayNode) node.get("Artikellist");
 
         Customer customer = new Customer(customernode.get("CustomerID").asInt());
 
