@@ -19,10 +19,8 @@ public class CustomerController {
 
     @GetMapping
     public String getAllCustomer(Model model) {
-
         List<Customer> customerlist = customerService.getAllCustomer();
         model.addAttribute("customers", customerlist);
-
         return "customerList";
     }
 
@@ -61,7 +59,7 @@ public class CustomerController {
             return "customerList";
         }
 
-        model.addAttribute("resultMessage", "ein Fehler ist aufgetreten");
+        model.addAttribute("errorMessage", "ein Fehler ist aufgetreten");
         model.addAttribute("customerForm", customer);
         return "addCustomer";
     }

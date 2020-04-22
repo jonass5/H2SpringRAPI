@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Add Person</title>
+    <title>Add Customer</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
@@ -14,7 +14,7 @@
 </ul>
 
 <br><br>
-<div th:if="${resultMessage}" th:utext="${resultMessage}"
+<div th:if="${errorMessage}" th:utext="${errorMessage}"
      style="color:red;font-style:italic;text-align:center;">...<br>
 </div>
 <div style="text-align:center;">

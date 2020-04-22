@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Artikellist</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<ul class="nav nav-pills pull-right">
+    <li style="margin-right: 51rem; margin-left: 15px;"><h1><a th:href="@{/}">&#11164;Back</a></h1></li>
+    <li><h1>Artikellist</h1></li>
+    </li>
+</ul>
+
+<div class="container">
+    <div class="header" style="margin-left: 200px;">
+        <ul class="nav nav-pills pull-right">
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a
+                    th:href="@{/api/artikel/addArtikel}">Add Artikel</a></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/artikel/deleteArtikel}">Delete
+                Artikel</a></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/artikel/updateArtikel}">Update
+                Artikel</a></h4>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<br/>
+
+<div>
+    <table border="1" width="1000" align="center">
+        <tr align="center">
+            <th>ArtikelID</th>
+            <th>Name</th>
+            <th>Preis</th>
+        </tr>
+        <tr align="center" th:each="artikel : ${artikel}">
+            <td th:utext="${artikel.artikelid}">...</td>
+            <td th:utext="${artikel.name}">...</td>
+            <td th:utext="${artikel.preis}">...</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>i

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add Artikel</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<ul class="nav nav-pills pull-right">
+    <li style="margin-right: 44.5rem; margin-left: 15px;"><h1><a th:href="@{/api/artikel/}">&#11164;Back</a></h1></li>
+    <li><h1>Create Artikel</h1></li>
+    </li>
+</ul>
+
+<br><br>
+<div th:if="${errorMessage}" th:utext="${errorMessage}"
+     style="color:red;font-style:italic;text-align:center;">...<br>
+</div>
+<div style="text-align:center;">
+    <div class="header">
+        <form th:action="@{/api/artikel/addArtikel}"
+              th:object="${artikelForm}" method="POST">
+            Name:
+            <br/>
+            <input type="text" th:field="*{name}"/><br/>
+
+            <br/>
+            Preis:
+            <br/>
+            <input type="text" th:field="*{preis}"/><br/>
+
+            <br/>
+            <input type="submit" value="Create"/>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>

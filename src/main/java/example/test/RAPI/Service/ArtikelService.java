@@ -24,6 +24,11 @@ public class ArtikelService {
         return artikelRepository.findById(artikelid).get();
     }
 
+    public boolean isArtikelExistById(int artikelid) {
+        return artikelRepository.findById(artikelid).isPresent();
+    }
+
+
     public void createArtikel(Artikel a) {
         artikelRepository.save(a);
     }
