@@ -8,32 +8,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/api/order")
 public class OrderContoller {
 
     @Autowired
     OrderService orderService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/orders")
+    @GetMapping()
     public List<Order> getOrders() {
         return orderService.getAllOrder();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/order/{orderid}")
+    @GetMapping(value = "/{orderid}")
     public Order getOrder(@PathVariable int orderid) {
         return orderService.getOrderById(orderid);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/order/add")
+    @PostMapping()
     public void addOrder(@RequestBody Order o) {
         orderService.createOrder(o);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/order/update")
+    @PutMapping()
     public void updateOrder(@RequestBody Order o) {
         orderService.updateOrder(o);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/order/delete/{orderid}")
+    @DeleteMapping(value = "/{orderid}")
     public void deleteOrder(@PathVariable int orderid) {
         orderService.deleteOrder(orderid);
     }

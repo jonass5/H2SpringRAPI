@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Customerlist</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<!--<h1>Customerlist</h1>-->
+
+<!--<h2><a th:href="@{/}">Back</a></h2>-->
+
+<ul class="nav nav-pills pull-right">
+    <li style="margin-right: 44.5rem; margin-left: 15px;"><h1><a th:href="@{/}">&#11164;Back</a></h1></li>
+    <li><h1>Customerlist</h1></li>
+    </li>
+</ul>
+
+<div class="container">
+    <div class="header" style="margin-left: 50px;">
+        <ul class="nav nav-pills pull-right">
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a
+                    th:href="@{/api/customer/addCustomer}">AddCustomer</a></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/customer/deleteCustomer}">Delete
+                Customer</a></h4>
+            </li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/customer/updateCustomer}">Update
+                Customer</a></h4>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<br/>
+
+<div>
+    <table border="1" width="1000" align="center">
+        <tr align="center">
+            <th>CustomerID</th>
+            <th>Name</th>
+            <th>Nachname</th>
+            <th>Alter</th>
+            <th>Rechte</th>
+        </tr>
+        <tr align="center" th:each="customer : ${customers}">
+            <td th:utext="${customer.customerid}">...</td>
+            <td th:utext="${customer.name}">...</td>
+            <td th:utext="${customer.nachname}">...</td>
+            <td th:utext="${customer.age}">...</td>
+            <td th:utext="${customer.customerRights?.name}  ?: '---'">...</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>i

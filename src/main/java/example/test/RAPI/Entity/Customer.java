@@ -36,6 +36,14 @@ public class Customer {
     @JoinColumn(name = "customerrightid")
     private CustomerRight customerRights;
 
+    public void setCustomerid(int customerid) {
+        this.customerid = customerid;
+    }
+
+    public int getCustomerid() {
+        return customerid;
+    }
+
     @OneToMany(mappedBy = "orderid")
     private Set<Order> orderList;
 

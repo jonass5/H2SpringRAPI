@@ -8,35 +8,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/api/orderartikel")
 public class Order_ArtikelController {
 
     @Autowired
     Order_ArtikelService orderArtikelService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/orderartikel")
+    @GetMapping()
     public List<Order_Artikel> getAllOrderArtikel() {
         return orderArtikelService.getAllOrder_Artikel();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/orderartikel/{orderid}-{artikelid}")
+    @GetMapping(value = "/{orderid}-{artikelid}")
     public Order_Artikel getOrderArtikel(@PathVariable int orderid, @PathVariable int artikelid) {
         return orderArtikelService.getOrder_ArtikelByOrderId(orderid, artikelid);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/orderartikel/add")
+    @PostMapping()
     public void createOrderArtikel(@RequestBody Order_Artikel o) {
         orderArtikelService.createOrder_Artikel(o);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/orderartikel/delete/{orderid}-{artikelid}")
+    @DeleteMapping(value = "/{orderid}-{artikelid}")
     public void deleteOrderArtikel(@PathVariable int orderid, @PathVariable int artikelid) {
         orderArtikelService.deleteOrder_Artikel(orderid, artikelid);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/orderartikel/update")
+    @PutMapping()
     public void updateOrderArtikel(@RequestBody Order_Artikel a) {
         orderArtikelService.updateOrder_Artikel(a);
     }
-
-
 }

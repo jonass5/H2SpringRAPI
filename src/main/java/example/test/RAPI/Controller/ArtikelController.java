@@ -8,32 +8,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/artikel")
 public class ArtikelController {
 
     @Autowired
     ArtikelService artikelService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/artikel")
+    @GetMapping()
     public List<Artikel> getAllArtikel() {
         return artikelService.getAllArtikel();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/artikel/{artikelid}")
+    @GetMapping(value = "/{artikelid}")
     public Artikel getArtikel(@PathVariable int artikelid) {
         return artikelService.getArtikelById(artikelid);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/artikel/delete/{artikelid}")
+    @DeleteMapping(value = "/{artikelid}")
     public void deleteArtikel(@PathVariable int artikelid) {
         artikelService.deleteArtikel(artikelid);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/artikel/add")
+    @PostMapping()
     public void createArtikel(@RequestBody Artikel a) {
         artikelService.createArtikel(a);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/artikel/update")
+    @PutMapping()
     public void updateArtikel(@RequestBody Artikel a) {
         artikelService.updateArtikel(a);
     }

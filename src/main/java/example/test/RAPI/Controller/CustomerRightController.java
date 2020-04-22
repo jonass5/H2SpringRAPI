@@ -8,32 +8,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/api/customerright")
 public class CustomerRightController {
 
     @Autowired
     CustomerRightService customerRightService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/customerrights")
+    @GetMapping()
     public List<CustomerRight> getAllCustomerRights() {
         return customerRightService.getAllCustomerRights();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/customerright/{customerrightid}")
+    @GetMapping(value = "/{customerrightid}")
     public CustomerRight getCustomerRight(@PathVariable int customerrightid) {
         return customerRightService.getCustomerRightById(customerrightid);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/customerright/delete/{customerrightid}")
+    @DeleteMapping(value = "/{customerrightid}")
     public void deleteCustomerRight(@PathVariable int customerrightid) {
         customerRightService.deleteCustomerRight(customerrightid);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/customerright/add")
+    @PostMapping()
     public void createCustomerRight(@RequestBody CustomerRight c) {
         customerRightService.createCustomerRight(c);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/customerright/update")
+    @PutMapping()
     public void updateCustomerRight(@RequestBody CustomerRight c) {
         customerRightService.updateCustomerRight(c);
     }

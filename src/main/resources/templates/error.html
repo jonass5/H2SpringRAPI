@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error Occurred</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Error Occurred!</h1>
+<b style="text-align: center;">[<span style="text-align: center;" th:text="${status}">status</span>]
+    <span style="text-align: center;" th:text="${error}">error</span>
+</b>
+<p style="text-align: center;" th:text="${message}">message</p>
+</body>
+</html>

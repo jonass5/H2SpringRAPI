@@ -21,7 +21,11 @@ public class CustomerService {
     }
 
     public Customer getCustomerById(int customerid) {
-        return customerRepository.findById(customerid).get();
+        return customerRepository.findById(customerid).get();//.orElseThrow(CustomerNotFoundException::new);
+    }
+
+    public boolean isCustomerExistById(int customerid) {
+        return customerRepository.findById(customerid).isPresent();//.orElseThrow(CustomerNotFoundException::new);
     }
 
     public void createCustomer(Customer c) {
@@ -29,12 +33,13 @@ public class CustomerService {
     }
 
     public void updateCustomer(Customer c) {
-        if (getCustomerById(c.getId()) != null) {
+        if (isCustomerExistById(c.getId())) {
             customerRepository.save(c);
         }
     }
 
     public void deleteCustomer(int customerid) {
+//        customerRepository.findById(customerid).orElseThrow(CustomerNotFoundException::new);
         customerRepository.deleteById(customerid);
     }
 }
