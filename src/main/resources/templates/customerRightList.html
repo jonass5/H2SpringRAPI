@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>CustomerRightList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<ul class="nav nav-pills pull-right">
+    <li style="margin-right: 47rem; margin-left: 15px;"><h1><a th:href="@{/}">&#11164;Back</a></h1></li>
+    <li><h1>CustomerRightList</h1></li>
+    </li>
+</ul>
+
+<div class="container">
+    <div class="header" style="margin-left: 200px;">
+        <ul class="nav nav-pills pull-right">
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a
+                    th:href="@{/api/customerRight/addCustomerRight}">Add CustomerRight</a></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/customerRight/deleteCustomerRight}">Delete
+                CustomerRight</a></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/customerRight/updateCustomerRight}">Update
+                CustomerRight</a></h4>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<br/>
+
+<div>
+    <table border="1" width="1000" align="center">
+        <tr align="center">
+            <th>CustomerRightID</th>
+            <th>Name</th>
+        </tr>
+        <tr align="center" th:each="customerRight : ${customerRights}">
+            <td th:utext="${customerRight.customerrightid}">...</td>
+            <td th:utext="${customerRight.name}">...</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

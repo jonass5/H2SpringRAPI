@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Update CustomerRight</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<ul class="nav nav-pills pull-right">
+    <li style="margin-right: 43rem; margin-left: 15px;"><h1><a th:href="@{/api/customerRight/}">&#11164;Back</a></h1>
+    </li>
+    <li><h1>Update CustomerRight</h1></li>
+    </li>
+</ul>
+
+<br><br>
+<div th:if="${errorMessage}" th:utext="${errorMessage}"
+     style="color:red;font-style:italic;text-align:center;">...<br>
+</div>
+<div style="text-align:center;">
+    <div class="header">
+        <form th:action="@{/api/customerRight/updateCustomerRight}"
+              th:object="${customerRightForm}" th:method="POST">
+            CustomerRightID:
+            <br/>
+            <input type="text" th:field="*{customerrightid}"/><br/>
+            <br/>
+            Name:
+            <br/>
+            <input type="text" th:field="*{name}"/><br/>
+
+            <br/>
+            <input type="submit" value="Update"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>

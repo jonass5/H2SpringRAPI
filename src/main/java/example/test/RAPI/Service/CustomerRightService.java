@@ -24,12 +24,16 @@ public class CustomerRightService {
         return customerRightRepository.findById(customerRightsid).get();
     }
 
+    public boolean isCustomerRightExistById(int customerRightsid) {
+        return customerRightRepository.findById(customerRightsid).isPresent();
+    }
+
     public void createCustomerRight(CustomerRight c) {
         customerRightRepository.save(c);
     }
 
     public void updateCustomerRight(CustomerRight c) {
-        if (getCustomerRightById(c.getId()) != null) {
+        if (getCustomerRightById(c.getCustomerrightid()) != null) {
             customerRightRepository.save(c);
         }
     }

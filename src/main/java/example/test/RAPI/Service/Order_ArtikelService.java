@@ -21,6 +21,10 @@ public class Order_ArtikelService {
         return list;
     }
 
+    public boolean isOrder_ArtikelExistById(int orderid, int artikelid) {
+        return orderArtikelRepository.existsById(new Order_ArtikelIdClass(orderid, artikelid));
+    }
+
     public Order_Artikel getOrder_ArtikelByOrderId(int orderid, int artikelid) {
         return orderArtikelRepository.findById(new Order_ArtikelIdClass(orderid, artikelid)).get();
     }

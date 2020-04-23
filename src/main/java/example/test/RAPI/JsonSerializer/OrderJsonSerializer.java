@@ -24,7 +24,7 @@ public class OrderJsonSerializer extends StdSerializer<Order> {
         jsonGenerator.writeNumberField("OrderID", order.getOrderid());
 
         jsonGenerator.writeObjectFieldStart("Customer");
-        jsonGenerator.writeObjectField("CustomerID", order.getCustomer().getId());
+        jsonGenerator.writeObjectField("CustomerID", order.getCustomer().getCustomerid());
         jsonGenerator.writeObjectField("Vorname", order.getCustomer().getName());
         jsonGenerator.writeObjectField("Nachname", order.getCustomer().getNachname());
         jsonGenerator.writeEndObject();

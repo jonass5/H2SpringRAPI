@@ -3,7 +3,6 @@ package example.test.RAPI.Controller;
 import example.test.RAPI.Entity.Customer;
 import example.test.RAPI.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +42,7 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/addCustomer")
-    @ResponseStatus(HttpStatus.CREATED)
+//    @ResponseStatus(HttpStatus.CREATED)
     public String createCustomer(Model model, @ModelAttribute Customer customer) {
         String name = customer.getName();
         String nachname = customer.getNachname();
@@ -56,7 +55,7 @@ public class CustomerController {
 
             List<Customer> customerlist = customerService.getAllCustomer();
             model.addAttribute("customers", customerlist);
-            return "customerList";
+            return "redirect:/api/customer";
         }
 
         model.addAttribute("errorMessage", "ein Fehler ist aufgetreten");
@@ -70,10 +69,10 @@ public class CustomerController {
     }
 
     @PostMapping("/deleteCustomer")
-    @ResponseStatus(HttpStatus.OK)
+//    @ResponseStatus(HttpStatus.OK)
     public String deleteCustomer(Model model, @ModelAttribute Customer customer) {
-        if (customerService.isCustomerExistById(customer.getId())) {
-            customerService.deleteCustomer(customer.getId());
+        if (customerService.isCustomerExistById(customer.getCustomerid())) {
+            customerService.deleteCustomer(customer.getCustomerid());
         } else {
             model.addAttribute("errorMessage", "Die Eingabe war falsch");
             model.addAttribute("customerForm", new Customer());
@@ -81,14 +80,14 @@ public class CustomerController {
         }
         List<Customer> customerlist = customerService.getAllCustomer();
         model.addAttribute("customers", customerlist);
-        return "customerList";
+        return "redirect:/api/customer";
     }
 
     //Update Customer(+Rights)
-    @ResponseStatus(HttpStatus.OK)
+//    @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/updateCustomer")
     public String updateCustomer(Model model, @ModelAttribute Customer customer) {
-        if (customerService.isCustomerExistById(customer.getId())) {
+        if (customerService.isCustomerExistById(customer.getCustomerid())) {
             customerService.updateCustomer(customer);
         } else {
             model.addAttribute("errorMessage", "Die Eingabe war falsch");
@@ -97,6 +96,6 @@ public class CustomerController {
         }
         List<Customer> customerlist = customerService.getAllCustomer();
         model.addAttribute("customers", customerlist);
-        return "customerList";
+        return "redirect:/api/customer";
     }
 }

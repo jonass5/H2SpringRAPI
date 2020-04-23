@@ -14,6 +14,14 @@ import java.util.Set;
 @JsonDeserialize(using = CustomerRightJsonDeserializer.class)
 public class CustomerRight {
 
+    public int getCustomerrightid() {
+        return customerrightid;
+    }
+
+    public void setCustomerrightid(int customerrightid) {
+        this.customerrightid = customerrightid;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "CUSTOMERRIGHTID")
@@ -43,14 +51,6 @@ public class CustomerRight {
 
     public void setCustomers(Set<Customer> customers) {
         this.customers = customers;
-    }
-
-    public int getId() {
-        return customerrightid;
-    }
-
-    public void setId(int customerrightid) {
-        this.customerrightid = customerrightid;
     }
 
     public String getName() {

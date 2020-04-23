@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Orderlist</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+</head>
+<body>
+
+<ul class="nav nav-pills pull-right">
+    <li style="margin-right: 44.5rem; margin-left: 15px;"><h1><a th:href="@{/}">&#11164;Back</a></h1></li>
+    <li><h1 class="pull-right">Orderlist</h1></li>
+    </li>
+</ul>
+
+<div class="container">
+    <div class="header" style="margin-left: 50px;">
+        <ul class="nav nav-pills pull-right">
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a
+                    th:href="@{/api/order/addOrder}">Add Order</a></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/order/deleteOrder}">Delete Order</a>
+            </h4>
+            </li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/order/updateOrder}">Update Order</a>
+            </h4>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <div class="header" style="margin-left: 50px;">
+        <ul class="nav nav-pills pull-right">
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a
+                    th:href="@{/api/orderArtikel/addOrderArtikel}">Add Orderartikel</a></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/orderArtikel/deleteOrderArtikel}">Delete
+                Orderartikel</a></h4>
+            </li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
+            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/orderArtikel/updateOrderArtikel}">Update
+                Orderartikel</a></h4>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<br/>
+
+<div>
+    <table border="1" width="1200" align="center">
+        <tr align="center">
+            <th>OrderID</th>
+            <th>Customer Name</th>
+            <th>Customer Nachname</th>
+            <th>Artikel</th>
+        </tr>
+        <tr align="center" th:each="order : ${orders}">
+            <td th:utext="${order.orderid}">...</td>
+            <td th:utext="${order.customer.name}">...</td>
+            <td th:utext="${order.customer.nachname}">...</td>
+            <td>
+                <span th:each="order_artikel,iterStat : ${order.artikelList}">
+                    <span th:text="${order_artikel.artikelid.name}"/> : <th:block
+                        th:text="${order_artikel.menge}"></th:block>
+                    </th:block>
+                    <th:block th:if="${!iterStat.last}">,</th:block>
+                </span>
+            </td>
+            <td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -13,7 +13,6 @@ import example.test.RAPI.Entity.Order_Artikel;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class OrderJsonDeserializer extends StdDeserializer<Order> {
 
@@ -61,7 +60,7 @@ public class OrderJsonDeserializer extends StdDeserializer<Order> {
 
         if (node.has("OrderID")) {
             int orderid = node.get("OrderID").asInt();
-            return new Order(orderid, customer, new HashSet(order_artikellist));
+            return new Order(orderid, customer, order_artikellist);
         }
         return new Order(customer);
     }

@@ -58,7 +58,7 @@ public class ArtikelController {
         }
         List<Artikel> artikelList = artikelService.getAllArtikel();
         model.addAttribute("artikel", artikelList);
-        return "artikelList";
+        return "redirect:/api/artikel";
     }
 
     @PostMapping(value = "/addArtikel")
@@ -67,7 +67,7 @@ public class ArtikelController {
             artikelService.createArtikel(artikel);
             List<Artikel> artikelList = artikelService.getAllArtikel();
             model.addAttribute("artikel", artikelList);
-            return "artikelList";
+            return "redirect:/api/artikel";
         }
 
         model.addAttribute("errorMessage", "Die Eingabe war falsch");
@@ -86,7 +86,7 @@ public class ArtikelController {
         }
         List<Artikel> artikelList = artikelService.getAllArtikel();
         model.addAttribute("artikel", artikelList);
-        return "artikelList";
+        return "redirect:/api/artikel";
     }
 
 }

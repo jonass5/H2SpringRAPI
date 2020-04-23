@@ -33,7 +33,7 @@ public class CustomerService {
     }
 
     public void updateCustomer(Customer c) {
-        if (isCustomerExistById(c.getId())) {
+        if (isCustomerExistById(c.getCustomerid())) {
             customerRepository.save(c);
         }
     }

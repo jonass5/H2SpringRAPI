@@ -6,7 +6,7 @@ import example.test.RAPI.JsonDeserializer.OrderJsonDeserializer;
 import example.test.RAPI.JsonSerializer.OrderJsonSerializer;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "BESTELLUNG")
@@ -24,13 +24,13 @@ public class Order {
     private Customer customer;
 
     @OneToMany(mappedBy = "orderid")
-    private Set<Order_Artikel> artikelList;
+    private List<Order_Artikel> artikelList;
 
     public int getOrderid() {
         return orderid;
     }
 
-    public Order(int orderid, Customer customer, Set<Order_Artikel> artikelList) {
+    public Order(int orderid, Customer customer, List<Order_Artikel> artikelList) {
         this.orderid = orderid;
         this.customer = customer;
         this.artikelList = artikelList;
@@ -47,7 +47,7 @@ public class Order {
         this.customer = customer;
     }
 
-    public Order(Set<Order_Artikel> artikelList, Customer customer) {
+    public Order(List<Order_Artikel> artikelList, Customer customer) {
         this.artikelList = artikelList;
         this.customer = customer;
     }
@@ -56,11 +56,11 @@ public class Order {
         this.orderid = orderid;
     }
 
-    public Set<Order_Artikel> getArtikelList() {
+    public List<Order_Artikel> getArtikelList() {
         return artikelList;
     }
 
-    public void setArtikelList(Set<Order_Artikel> artikelList) {
+    public void setArtikelList(List<Order_Artikel> artikelList) {
         this.artikelList = artikelList;
     }
 
@@ -68,7 +68,8 @@ public class Order {
         return customer;
     }
 
-    public void setCustomerid(Customer customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
 }

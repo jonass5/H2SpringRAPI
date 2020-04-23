@@ -87,14 +87,6 @@ public class Customer {
         this.customerRights = customerRights;
     }
 
-    public int getId() {
-        return customerid;
-    }
-
-    public void setId(int customerid) {
-        this.customerid = customerid;
-    }
-
     public String getName() {
         return name;
     }

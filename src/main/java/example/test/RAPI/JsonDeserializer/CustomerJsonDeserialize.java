@@ -34,7 +34,7 @@ public class CustomerJsonDeserialize extends StdDeserializer<Customer> {
 
             if (rightsnode.has("RightID")) {
                 customerRight = new CustomerRight();
-                customerRight.setId(rightsnode.get("RightID").asInt());
+                customerRight.setCustomerrightid(rightsnode.get("RightID").asInt());
             }
         }
 

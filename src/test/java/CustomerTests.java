@@ -9,9 +9,9 @@ import static org.junit.Assert.assertEquals;
 
 public class CustomerTests {
 
-    /////////////////////
-    //TODO ALLE ENTITYS//
-    /////////////////////
+    ////////////////////////
+    //TODO ALLE CONTROLLER//
+    ////////////////////////
 
     private static final String API_ROOT = "http://localhost:8080/api/customer";
 
@@ -29,7 +29,7 @@ public class CustomerTests {
         customer.setName("TestKundeV");
         customer.setNachname("TestKundeN");
         customer.setAge(111);
-        customer.setId(1);
+        customer.setCustomerid(1);
 
         Response response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -60,7 +60,7 @@ public class CustomerTests {
     @Test
     public void whenUpdateCreatedCustomer_thenUpdated() {
         Customer customer = new Customer();
-        customer.setId(1);
+        customer.setCustomerid(1);
         customer.setName("TestKundeVNeu");
 
         Response response = RestAssured.given()

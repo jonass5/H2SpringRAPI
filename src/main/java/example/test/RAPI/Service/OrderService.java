@@ -16,11 +16,7 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private Order_ArtikelService orderArtikelService;
-
-    @Autowired
     private CustomerRepository customerRepository;
-
 
     public List<Order> getAllOrder() {
         List<Order> list = new ArrayList<>();
@@ -32,10 +28,12 @@ public class OrderService {
         return orderRepository.findById(orderid).get();
     }
 
+    public boolean isOrderExistById(int orderid) {
+        return orderRepository.findById(orderid).isPresent();
+    }
+
     public void createOrder(Order c) {
-        if (customerRepository.findById(c.getCustomer().getId()).get().getCustomerRights() != null) {
-            orderRepository.save(c);
-        }
+        orderRepository.save(c);
     }
 
     public void updateOrder(Order c) {

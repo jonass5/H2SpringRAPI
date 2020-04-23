@@ -21,7 +21,7 @@ public class CustomerJsonSerializer extends StdSerializer<Customer> {
     public void serialize(Customer customer, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
 
-        jsonGenerator.writeNumberField("CustomerID", customer.getId());
+        jsonGenerator.writeNumberField("CustomerID", customer.getCustomerid());
 
         jsonGenerator.writeStringField("Nachname", customer.getNachname());
         jsonGenerator.writeStringField("Vorname", customer.getName());

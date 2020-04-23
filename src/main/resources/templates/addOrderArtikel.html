@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Create OrderArtikel</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<ul class="nav nav-pills pull-right">
+    <li style="margin-right: 44.5rem; margin-left: 15px;"><h1><a th:href="@{/api/order/}">&#11164;Back</a></h1></li>
+    <li><h1>Create OrderArtikel</h1></li>
+    </li>
+</ul>
+
+<br><br>
+<div th:if="${errorMessage}" th:utext="${errorMessage}"
+     style="color:red;font-style:italic;text-align:center;">...<br>
+</div>
+<div style="text-align:center;">
+    <div class="header">
+        <form th:action="@{/api/orderArtikel/addOrderArtikel}"
+              th:object="${orderArtikelForm}" method="POST">
+            OrderID:
+            <br/>
+            <input type="text" th:field="*{orderid.orderid}"/><br/>
+
+            <br>
+            ArtikelID:
+            <br/>
+            <input type="text" th:field="*{artikelid.artikelid}"/><br/>
+
+            <br>
+            Menge:
+            <br/>
+            <input type="text" th:field="*{menge}"/><br/>
+
+
+            <br/>
+            <input type="submit" value="Create"/>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
