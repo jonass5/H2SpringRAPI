@@ -14,6 +14,6 @@ public class HomeContoller {
     @GetMapping("/")
     public String main(Model model) {
         model.addAttribute("appName", appName);
-        return "home"; //view
+        return "home";
     }
 }

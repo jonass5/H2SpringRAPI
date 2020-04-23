@@ -5,7 +5,10 @@ import example.test.RAPI.Service.ArtikelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -20,7 +23,6 @@ public class ArtikelController {
     public String getAllArtikel(Model model) {
         List<Artikel> artikelList = artikelService.getAllArtikel();
         model.addAttribute("artikel", artikelList);
-
         return "artikelList";
     }
 
@@ -42,11 +44,6 @@ public class ArtikelController {
         return "updateArtikel";
     }
 
-    @GetMapping(value = "/{artikelid}")
-    public Artikel getArtikel(@PathVariable int artikelid) {
-        return artikelService.getArtikelById(artikelid);
-    }
-
     @PostMapping(value = "/deleteArtikel")
     public String deleteArtikel(Model model, @ModelAttribute Artikel artikel) {
         if (artikelService.isArtikelExistById(artikel.getArtikelid())) {
@@ -56,8 +53,6 @@ public class ArtikelController {
             model.addAttribute("artikelForm", artikel);
             return "deleteArtikel";
         }
-        List<Artikel> artikelList = artikelService.getAllArtikel();
-        model.addAttribute("artikel", artikelList);
         return "redirect:/api/artikel";
     }
 
@@ -65,8 +60,6 @@ public class ArtikelController {
     public String createArtikel(Model model, @ModelAttribute Artikel artikel) {
         if (artikel.getName() != null && !artikel.getName().trim().equalsIgnoreCase("") && artikel.getPreis() > 0.0) {
             artikelService.createArtikel(artikel);
-            List<Artikel> artikelList = artikelService.getAllArtikel();
-            model.addAttribute("artikel", artikelList);
             return "redirect:/api/artikel";
         }
 
@@ -84,8 +77,6 @@ public class ArtikelController {
             model.addAttribute("artikelForm", artikel);
             return "updateArtikel";
         }
-        List<Artikel> artikelList = artikelService.getAllArtikel();
-        model.addAttribute("artikel", artikelList);
         return "redirect:/api/artikel";
     }
 

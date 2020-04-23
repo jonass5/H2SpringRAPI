@@ -6,7 +6,10 @@ import example.test.RAPI.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -45,18 +48,11 @@ public class OrderContoller {
         return "updateOrder";
     }
 
-    @GetMapping(value = "/{orderid}")
-    public Order getOrder(@PathVariable int orderid) {
-        return orderService.getOrderById(orderid);
-    }
-
     @PostMapping(value = "/addOrder")
     public String addOrder(Model model, @ModelAttribute Order order) {
         if (customerService.isCustomerExistById(order.getCustomer().getCustomerid())) {
             if (customerService.getCustomerById(order.getCustomer().getCustomerid()).getCustomerRights() != null) {
                 orderService.createOrder(order);
-                List<Order> orderList = orderService.getAllOrder();
-                model.addAttribute("orders", orderList);
                 return "redirect:/api/order";
             } else {
                 model.addAttribute("orderForm", order);
@@ -72,8 +68,6 @@ public class OrderContoller {
     @PostMapping(value = "/updateOrder")
     public String updateOrder(Model model, @ModelAttribute Order order) {
         orderService.updateOrder(order);
-        List<Order> orderList = orderService.getAllOrder();
-        model.addAttribute("orders", orderList);
         return "redirect:/api/order";
     }
 
@@ -81,8 +75,6 @@ public class OrderContoller {
     public String deleteOrder(Model model, @ModelAttribute Order order) {
         if (orderService.isOrderExistById(order.getOrderid())) {
             orderService.deleteOrder(order.getOrderid());
-            List<Order> orderList = orderService.getAllOrder();
-            model.addAttribute("orders", orderList);
             return "redirect:/api/order";
         }
 

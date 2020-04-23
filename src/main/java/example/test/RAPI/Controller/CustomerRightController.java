@@ -5,7 +5,10 @@ import example.test.RAPI.Service.CustomerRightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -41,17 +44,10 @@ public class CustomerRightController {
         return "addCustomerRight";
     }
 
-    @GetMapping(value = "/{customerrightid}")
-    public CustomerRight getCustomerRight(@PathVariable int customerrightid) {
-        return customerRightService.getCustomerRightById(customerrightid);
-    }
-
     @PostMapping(value = "/deleteCustomerRight")
     public String deleteCustomerRight(Model model, @ModelAttribute CustomerRight customerRight) {
         if (customerRightService.isCustomerRightExistById(customerRight.getCustomerrightid())) {
             customerRightService.deleteCustomerRight(customerRight.getCustomerrightid());
-            List<CustomerRight> customerRightList = customerRightService.getAllCustomerRights();
-            model.addAttribute("customerRights", customerRightList);
             return "redirect:/api/customerRight";
         }
 
@@ -64,8 +60,6 @@ public class CustomerRightController {
     public String createCustomerRight(Model model, @ModelAttribute CustomerRight customerRight) {
         if (!customerRight.getName().trim().equalsIgnoreCase("")) {
             customerRightService.createCustomerRight(customerRight);
-            List<CustomerRight> customerRightList = customerRightService.getAllCustomerRights();
-            model.addAttribute("customerRights", customerRightList);
             return "redirect:/api/customerRight";
         }
 
@@ -78,8 +72,6 @@ public class CustomerRightController {
     public String updateCustomerRight(Model model, @ModelAttribute CustomerRight customerRight) {
         if (customerRightService.isCustomerRightExistById(customerRight.getCustomerrightid()) && !customerRight.getName().trim().equalsIgnoreCase("")) {
             customerRightService.updateCustomerRight(customerRight);
-            List<CustomerRight> customerRightList = customerRightService.getAllCustomerRights();
-            model.addAttribute("customerRights", customerRightList);
             return "redirect:/api/customerRight";
         }
 

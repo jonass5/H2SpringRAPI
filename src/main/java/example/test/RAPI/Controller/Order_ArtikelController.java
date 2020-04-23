@@ -25,11 +25,6 @@ public class Order_ArtikelController {
     @Autowired
     OrderService orderService;
 
-//    @GetMapping()
-//    public List<Order_Artikel> getAllOrderArtikel() {
-//        return orderArtikelService.getAllOrder_Artikel();
-//    }
-
     @GetMapping(value = "/addOrderArtikel")
     public String addOrderArtikel(Model model) {
         model.addAttribute("orderArtikelForm", new Order_Artikel());
@@ -47,11 +42,6 @@ public class Order_ArtikelController {
         model.addAttribute("orderArtikelForm", new Order_Artikel());
         return "updateOrderArtikel";
     }
-
-//    @GetMapping(value = "/{orderid}-{artikelid}")
-//    public Order_Artikel getOrderArtikel(@PathVariable int orderid, @PathVariable int artikelid) {
-//        return orderArtikelService.getOrder_ArtikelByOrderId(orderid, artikelid);
-//    }
 
     @PostMapping(value = "addOrderArtikel")
     public String addOrderArtikel(Model model, @ModelAttribute Order_Artikel order_artikel) {

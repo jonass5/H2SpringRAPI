@@ -35,10 +35,10 @@
             <br/>
             <input type="text" th:field="*{age}"/><br/>
 
-            <!--            <br/>-->
-            <!--            RechteID:-->
-            <!--            <br/>-->
-            <!--            <input type="checkbox" th:field="*{customerRights.customerrightid}" th:value="${feat}" />-->
+            <br/>
+            RechteID (0 = keine Rechte):
+            <br/>
+            <input th:field="*{customerRights.customerrightid}" type="text"/><br/>
 
             <br/>
             <input type="submit" value="Create"/>
