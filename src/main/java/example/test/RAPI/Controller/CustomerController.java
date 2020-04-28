@@ -1,16 +1,15 @@
 package example.test.RAPI.Controller;
 
 import example.test.RAPI.Entity.Customer;
-import example.test.RAPI.Service.CustomerRightService;
 import example.test.RAPI.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -20,36 +19,33 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-    @Autowired
-    CustomerRightService customerRightService;
+    @Value("${spring.application.name}")
+    String appName;
 
     @GetMapping
     public String getAllCustomer(Model model) {
         List<Customer> customerlist = customerService.getAllCustomer();
         model.addAttribute("customers", customerlist);
+        model.addAttribute("appName", appName);
         return "customerList";
     }
 
     @GetMapping(value = "/addCustomer")
     public String showAddCustomer(Model model) {
         model.addAttribute("customerForm", new Customer());
+        model.addAttribute("appName", appName);
         return "addCustomer";
     }
 
-    @GetMapping(value = "/deleteCustomer")
-    public String showDeleteCustomer(Model model) {
-        model.addAttribute("customerForm", new Customer());
-        return "deleteCustomer";
-    }
-
-    @GetMapping(value = "/updateCustomer")
-    public String showUpdateCustomer(Model model) {
-        model.addAttribute("customerForm", new Customer());
+    @GetMapping(value = "/updateCustomer/{id}")
+    public String showUpdateForm(@PathVariable("id") int id, Model model) {
+        model.addAttribute("customerForm", customerService.getCustomerById(id));
+        model.addAttribute("appName", appName);
         return "updateCustomer";
     }
 
     @PostMapping(value = "/addCustomer")
-    public String createCustomer(Model model, @ModelAttribute Customer customer) {
+    public String createCustomer(Model model, @Valid @ModelAttribute Customer customer, BindingResult result) {
         if (customer.getName() != null && customer.getName().length() > 0 && customer.getNachname() != null && customer.getNachname().length() > 0 && customer.getAge() > 0) {
             if (customer.getCustomerRights() != null && customer.getCustomerRights().getCustomerrightid() != 1) {
                 customer.setCustomerRights(null);
@@ -57,27 +53,24 @@ public class CustomerController {
             customerService.createCustomer(customer);
             return "redirect:/api/customer";
         }
-
         model.addAttribute("errorMessage", "ein Fehler ist aufgetreten");
         model.addAttribute("customerForm", customer);
+        model.addAttribute("appName", appName);
         return "addCustomer";
     }
 
-    @PostMapping("/deleteCustomer")
-    public String deleteCustomer(Model model, @ModelAttribute Customer customer) {
-        if (customerService.isCustomerExistById(customer.getCustomerid())) {
-            customerService.deleteCustomer(customer.getCustomerid());
+    @GetMapping(value = "/deleteCustomer/{id}")
+    public String deleteCustomer(@PathVariable("id") int id, Model model) {
+        if (customerService.isCustomerExistById(id)) {
+            customerService.deleteCustomer(id);
         } else {
-            model.addAttribute("errorMessage", "Die Eingabe war falsch");
-            model.addAttribute("customerForm", new Customer());
-            return "deleteCustomer";
+            model.addAttribute("errorMessage", "Löschen nicht möglich");
         }
         return "redirect:/api/customer";
     }
 
-    //Update Customer(+Rights)
     @PostMapping(value = "/updateCustomer")
-    public String updateCustomer(Model model, @ModelAttribute Customer customer) {
+    public String updateStudent(@Valid @ModelAttribute Customer customer, BindingResult result, Model model) {
         if (customerService.isCustomerExistById(customer.getCustomerid())) {
             if (customer.getCustomerRights().getCustomerrightid() == 0) {
                 customer.setCustomerRights(null);
@@ -85,7 +78,8 @@ public class CustomerController {
             customerService.updateCustomer(customer);
         } else {
             model.addAttribute("errorMessage", "Die Eingabe war falsch");
-            model.addAttribute("customerForm", new Customer());
+            model.addAttribute("customerForm", customer);
+            model.addAttribute("appName", appName);
             return "updateCustomer";
         }
         return "redirect:/api/customer";

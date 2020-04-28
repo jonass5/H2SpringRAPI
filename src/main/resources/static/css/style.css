@@ -56,8 +56,31 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+article, aside, figcaption, figure, footer, header, hgroup, main, nav {
   display: block;
+}
+
+nav{
+    background: #3A3F44;
+}
+
+body{
+    background: linear-gradient(45deg, #0000ff -10%, #ff0000 110%);
+    background-size: 550% 550%;
+    animation: changeColor 8s ease-in-out infinite;
+}
+
+@keyframes changeColor
+{
+ 0%{
+    background-position: 0% 50%;
+ }
+ 50%{
+    background-position: 100% 50%;
+ }
+ 100%{
+    background-position: 0% 50%;
+ }
 }
 
 body {
@@ -239,6 +262,49 @@ th {
 label {
   display: inline-block;
   margin-bottom: 0.5rem;
+}
+
+.button-create {
+  background-color: #00FF00;
+  border: none;
+  color: white;
+  padding: 10px 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button-cancel {
+  background-color: #FF0000;
+  border: none;
+  color: white;
+  padding: 10px 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.text-readonly{
+ background: #B8B8B8;
+ borderless;
+ border:2px solid #B8B8B8;
+}
+
+input.text-readonly:focus {
+    outline-width: 0;
+}
+
+.button-update {
+  background-color: #0000FF;
+  border: none;
+  color: white;
+  padding: 10px 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
 
 button {
@@ -5114,6 +5180,7 @@ input[type="button"].btn-block {
           flex: 1 1 auto;
   min-height: 1px;
   padding: 1.25rem;
+  align: centered;
 }
 
 .card-title {
@@ -11285,3 +11352,4 @@ legend {
 .list-group-item:hover {
   background-color: #1c1e22;
 }
+

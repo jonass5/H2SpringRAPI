@@ -3,12 +3,10 @@ package example.test.RAPI.Controller;
 import example.test.RAPI.Entity.Artikel;
 import example.test.RAPI.Service.ArtikelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,39 +17,37 @@ public class ArtikelController {
     @Autowired
     ArtikelService artikelService;
 
+    @Value("${spring.application.name}")
+    String appName;
+
     @GetMapping()
     public String getAllArtikel(Model model) {
         List<Artikel> artikelList = artikelService.getAllArtikel();
         model.addAttribute("artikel", artikelList);
+        model.addAttribute("appName", appName);
         return "artikelList";
     }
 
     @GetMapping(value = "/addArtikel")
     public String showAddArtikel(Model model) {
         model.addAttribute("artikelForm", new Artikel());
+        model.addAttribute("appName", appName);
         return "addArtikel";
     }
 
-    @GetMapping(value = "/deleteArtikel")
-    public String showDeleteArtikel(Model model) {
-        model.addAttribute("artikelForm", new Artikel());
-        return "deleteArtikel";
-    }
-
-    @GetMapping(value = "/updateArtikel")
-    public String showUpdateArtikel(Model model) {
-        model.addAttribute("artikelForm", new Artikel());
+    @GetMapping(value = "/updateArtikel/{id}")
+    public String showUpdateForm(@PathVariable("id") int id, Model model) {
+        model.addAttribute("artikelForm", artikelService.getArtikelById(id));
+        model.addAttribute("appName", appName);
         return "updateArtikel";
     }
 
-    @PostMapping(value = "/deleteArtikel")
-    public String deleteArtikel(Model model, @ModelAttribute Artikel artikel) {
-        if (artikelService.isArtikelExistById(artikel.getArtikelid())) {
-            artikelService.deleteArtikel(artikel.getArtikelid());
+    @GetMapping(value = "/deleteArtikel/{id}")
+    public String deleteCustomer(@PathVariable("id") int id, Model model) {
+        if (artikelService.isArtikelExistById(id)) {
+            artikelService.deleteArtikel(id);
         } else {
             model.addAttribute("errorMessage", "Die Eingabe war falsch");
-            model.addAttribute("artikelForm", artikel);
-            return "deleteArtikel";
         }
         return "redirect:/api/artikel";
     }
@@ -65,6 +61,7 @@ public class ArtikelController {
 
         model.addAttribute("errorMessage", "Die Eingabe war falsch");
         model.addAttribute("artikelForm", artikel);
+        model.addAttribute("appName", appName);
         return "addArtikel";
     }
 
@@ -75,6 +72,7 @@ public class ArtikelController {
         } else {
             model.addAttribute("errorMessage", "Die Eingabe war falsch");
             model.addAttribute("artikelForm", artikel);
+            model.addAttribute("appName", appName);
             return "updateArtikel";
         }
         return "redirect:/api/artikel";

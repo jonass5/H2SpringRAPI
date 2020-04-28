@@ -2,48 +2,82 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Artikellist</title>
+    <link crossorigin="anonymous"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          rel="stylesheet">
+    <link crossorigin="anonymous"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+          rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
 
-<ul class="nav nav-pills pull-right">
-    <li style="margin-right: 51rem; margin-left: 15px;"><h1><a th:href="@{/}">&#11164;Back</a></h1></li>
-    <li><h1>Artikellist</h1></li>
-    </li>
-</ul>
+<div>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" th:text="${appName}"></a>
+        <div id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/api/customer/}">Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/api/order}">Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/api/customerRight}">CustomerRight</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/api/artikel}">Artikel</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
 
-<div class="container">
-    <div class="header" style="margin-left: 200px;">
-        <ul class="nav nav-pills pull-right">
-            <li style="margin-left: 40; margin-right: 40px;"><h4><a
-                    th:href="@{/api/artikel/addArtikel}">Add Artikel</a></h4></li>
-            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
-            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/artikel/deleteArtikel}">Delete
-                Artikel</a></h4></li>
-            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
-            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/artikel/updateArtikel}">Update
-                Artikel</a></h4>
-            </li>
-        </ul>
+
+<br><br>
+
+<div class="container my-7">
+    <div class="card">
+        <div class="card-header">
+            <h2>Artikellist</h2>
+            <a class="btn btn-primary" href="/api/artikel/addArtikel">
+                <i class="fas fa-cart-plus"> Add Artikel</i></a>
+        </div>
+        <div class="card-body">
+            <div>
+                <h5 style="color:red;font-style:italic;text-align:center;" th:if="${errorMessage}"
+                    th:utext="${errorMessage}"></h5>
+                <table class="table table-striped">
+                    <tr align="center">
+                        <th>ArtikelID</th>
+                        <th>Name</th>
+                        <th>Preis</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr align="center" th:each="artikel : ${artikel}">
+                        <td th:utext="${artikel.artikelid}">...</td>
+                        <td th:utext="${artikel.name}">...</td>
+                        <td th:utext="${artikel.preis}">...</td>
+                        <td><a class="btn btn-primary"
+                               th:href="@{/api/artikel/updateArtikel/{id} (id=${artikel.artikelid})}"><i
+                                class="fas fa-edit"></i></a></td>
+                        <td><a
+                                class="btn btn-primary"
+                                th:href="@{/api/artikel/deleteArtikel/{id} (id=${artikel.artikelid})}"><i
+                                class="fas fa-eraser"></i></a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
+<br><br>
 
-<br/>
-
-<div>
-    <table border="1" width="1000" align="center">
-        <tr align="center">
-            <th>ArtikelID</th>
-            <th>Name</th>
-            <th>Preis</th>
-        </tr>
-        <tr align="center" th:each="artikel : ${artikel}">
-            <td th:utext="${artikel.artikelid}">...</td>
-            <td th:utext="${artikel.name}">...</td>
-            <td th:utext="${artikel.preis}">...</td>
-        </tr>
-    </table>
-</div>
 </body>
-</html>i
+</html>

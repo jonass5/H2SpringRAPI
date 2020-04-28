@@ -3,33 +3,69 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Add CustomerRight</title>
+    <link crossorigin="anonymous"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          rel="stylesheet">
+    <link crossorigin="anonymous"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+          rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
 
-<ul class="nav nav-pills pull-right">
-    <li style="margin-right: 43rem; margin-left: 15px;"><h1><a th:href="@{/api/customerRight/}">&#11164;Back</a></h1>
-    </li>
-    <li><h1>Create CustomerRight</h1></li>
-    </li>
-</ul>
+<div>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" th:text="${appName}"></a>
+        <div id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/api/customer/}">Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/api/order}">Order</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/api/customerRight}">CustomerRight</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/api/artikel}">Artikel</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
 
 <br><br>
-<div th:if="${errorMessage}" th:utext="${errorMessage}"
-     style="color:red;font-style:italic;text-align:center;">...<br>
-</div>
-<div style="text-align:center;">
-    <div class="header">
-        <form th:action="@{/api/customerRight/addCustomerRight}"
-              th:object="${customerRightForm}" method="POST">
-            Name:
-            <br/>
-            <input type="text" th:field="*{name}"/><br/>
 
-            <br/>
-            <input type="submit" value="Create"/>
-        </form>
+<div class="container my-7">
+    <div class="card">
+        <div class="card-header">
+            <h2>Add CustomerRight</h2>
+        </div>
+        <div class="card-body">
+            <div class="card text-center" style="border: 0px">
+                <h5 style="color:red;font-style:italic;text-align:center;" th:if="${errorMessage}"
+                    th:utext="${errorMessage}"></h5>
+                <form method="POST"
+                      th:action="@{/api/customerRight/addCustomerRight}" th:object="${customerRightForm}">
+                    Name:
+                    <br/>
+                    <input th:field="*{name}" type="text"/><br/>
+
+                    <br/>
+                    <br/>
+                    <input class="button-create" type="submit" value="Create"/><a class="pull right button-cancel"
+                                                                                  href="/api/customerRight"
+                                                                                  style="margin-left: 20px">Cancel</a>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+
+
 </body>
 </html>

@@ -2,57 +2,86 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Customerlist</title>
+    <link crossorigin="anonymous"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          rel="stylesheet">
+    <link crossorigin="anonymous"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+          rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
 
-<!--<h1>Customerlist</h1>-->
+<div>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" th:text="${appName}"></a>
+        <div id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/api/customer/}">Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/api/order}">Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/api/customerRight}">CustomerRight</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/api/artikel}">Artikel</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
 
-<!--<h2><a th:href="@{/}">Back</a></h2>-->
 
-<ul class="nav nav-pills pull-right">
-    <li style="margin-right: 44.5rem; margin-left: 15px;"><h1><a th:href="@{/}">&#11164;Back</a></h1></li>
-    <li><h1>Customerlist</h1></li>
-    </li>
-</ul>
+<br/><br/>
 
-<div class="container">
-    <div class="header" style="margin-left: 50px;">
-        <ul class="nav nav-pills pull-right">
-            <li style="margin-left: 40; margin-right: 40px;"><h4><a
-                    th:href="@{/api/customer/addCustomer}">AddCustomer</a></h4></li>
-            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
-            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/customer/deleteCustomer}">Delete
-                Customer</a></h4>
-            </li>
-            <li style="margin-left: 40; margin-right: 40px;"><h4><strong>|</strong></h4></li>
-            <li style="margin-left: 40; margin-right: 40px;"><h4><a th:href="@{/api/customer/updateCustomer}">Update
-                Customer</a></h4>
-            </li>
-        </ul>
+<div class="container my-7">
+    <div class="card">
+        <div class="card-header">
+            <h2>Customerlist</h2>
+            <a class="btn btn-primary" href="/api/customer/addCustomer"><i
+                    class="fas fa-user-plus ml-2"> Add Customer</i></a>
+        </div>
+        <div class="card-body">
+            <div>
+                <h5 style="color:red;font-style:italic;text-align:center;" th:if="${errorMessage}"
+                    th:utext="${errorMessage}"></h5>
+                <table class="table table-striped">
+                    <tr align="center">
+                        <th>CustomerID</th>
+                        <th>Name</th>
+                        <th>Nachname</th>
+                        <th>Alter</th>
+                        <th>Rechte</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr align="center" th:each="customer : ${customers}">
+                        <td th:utext="${customer.customerid}">...</td>
+                        <td th:utext="${customer.name}">...</td>
+                        <td th:utext="${customer.nachname}">...</td>
+                        <td th:utext="${customer.age}">...</td>
+                        <td th:utext="${customer.customerRights?.name}  ?: '---'">...</td>
+                        <td><a class="btn btn-primary"
+                               th:href="@{/api/customer/updateCustomer/{id}(id=${customer.customerid})}"><i
+                                class="fas fa-edit"></i></a></td>
+                        <td><a
+                                class="btn btn-primary"
+                                th:href="@{/api/customer/deleteCustomer/{id}(id=${customer.customerid})}"><i
+                                class="fas fa-eraser"></i></i></a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
-<br/>
 
-<div>
-    <table border="1" width="1000" align="center">
-        <tr align="center">
-            <th>CustomerID</th>
-            <th>Name</th>
-            <th>Nachname</th>
-            <th>Alter</th>
-            <th>Rechte</th>
-        </tr>
-        <tr align="center" th:each="customer : ${customers}">
-            <td th:utext="${customer.customerid}">...</td>
-            <td th:utext="${customer.name}">...</td>
-            <td th:utext="${customer.nachname}">...</td>
-            <td th:utext="${customer.age}">...</td>
-            <td th:utext="${customer.customerRights?.name}  ?: '---'">...</td>
-        </tr>
-    </table>
-</div>
 </body>
-</html>i
+</html>

@@ -1,16 +1,15 @@
 package example.test.RAPI.Controller;
 
+import example.test.RAPI.Entity.Artikel;
 import example.test.RAPI.Entity.Order_Artikel;
 import example.test.RAPI.Service.ArtikelService;
 import example.test.RAPI.Service.OrderService;
 import example.test.RAPI.Service.Order_ArtikelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value = "/api/orderArtikel")
@@ -25,61 +24,67 @@ public class Order_ArtikelController {
     @Autowired
     OrderService orderService;
 
-    @GetMapping(value = "/addOrderArtikel")
-    public String addOrderArtikel(Model model) {
-        model.addAttribute("orderArtikelForm", new Order_Artikel());
+    @Value("${spring.application.name}")
+    String appName;
+
+    @GetMapping(value = "/addOrderArtikel/{id}")
+    public String addOrderArtikel(@PathVariable("id") int id, Model model) {
+        Order_Artikel oa = new Order_Artikel(orderService.getOrderById(id), new Artikel(), 0);
+        model.addAttribute("orderArtikelForm", oa/*new Order_Artikel(orderService.getOrderById(id), null ,0 )*/);
+        model.addAttribute("appName", appName);
         return "addOrderArtikel";
     }
 
-    @GetMapping(value = "/deleteOrderArtikel")
-    public String deleteOrderArtikel(Model model) {
-        model.addAttribute("orderArtikelForm", new Order_Artikel());
-        return "deleteOrderArtikel";
-    }
-
-    @GetMapping(value = "/updateOrderArtikel")
-    public String updateOrderArtikel(Model model) {
-        model.addAttribute("orderArtikelForm", new Order_Artikel());
+    @GetMapping(value = "/updateOrderArtikel/{oid}-{aid}")
+    public String showUpdateForm(@PathVariable("oid") int order_id, @PathVariable("aid") int artikel_id, Model model) {
+        model.addAttribute("orderArtikelForm", orderArtikelService.getOrder_ArtikelByOrderId(order_id, artikel_id));
+        model.addAttribute("appName", appName);
         return "updateOrderArtikel";
     }
 
     @PostMapping(value = "addOrderArtikel")
     public String addOrderArtikel(Model model, @ModelAttribute Order_Artikel order_artikel) {
-        if (!orderArtikelService.isOrder_ArtikelExistById(order_artikel.getOrderid().getOrderid(), order_artikel.getArtikelid().getArtikelid()) && order_artikel.getMenge() > 0) {
+        if (!orderArtikelService.isOrder_ArtikelExistById(order_artikel.getOrderid().getOrderid(), order_artikel.getArtikelid().getArtikelid()) && order_artikel.getMenge() > 0
+                && artikelService.isArtikelExistById(order_artikel.getArtikelid().getArtikelid())) {
             orderArtikelService.createOrder_Artikel(order_artikel);
-            return "redirect:/api/order";
-        } else if (artikelService.isArtikelExistById(order_artikel.getArtikelid().getArtikelid()) && orderService.isOrderExistById(order_artikel.getOrderid().getOrderid())) {
+            return "redirect:/api/order/updateOrder/" + order_artikel.getOrderid().getOrderid();
+        } else if (orderArtikelService.isOrder_ArtikelExistById(order_artikel.getOrderid().getOrderid(), order_artikel.getArtikelid().getArtikelid())) {
             model.addAttribute("orderArtikelForm", order_artikel);
             model.addAttribute("errorMessage", "OrderArtikel ist bereits vorhanden!");
+            model.addAttribute("appName", appName);
             return "addOrderArtikel";
         } else {
             model.addAttribute("orderArtikelForm", order_artikel);
-            model.addAttribute("errorMessage", "Ein Fehler ist aufgetreten!");
+            model.addAttribute("errorMessage", "ArtikelID nicht vorhanden oder Menge zu klein!");
+            model.addAttribute("appName", appName);
             return "addOrderArtikel";
         }
     }
 
-    @PostMapping(value = "/deleteOrderArtikel")
-    public String deleteOrderArtikel(Model model, @ModelAttribute Order_Artikel order_artikel) {
-        if (orderArtikelService.isOrder_ArtikelExistById(order_artikel.getOrderid().getOrderid(), order_artikel.getArtikelid().getArtikelid())) {
-            orderArtikelService.deleteOrder_Artikel(order_artikel.getOrderid().getOrderid(), order_artikel.getArtikelid().getArtikelid());
-            return "redirect:/api/order";
+    @GetMapping(value = "/deleteOrderArtikel/{oid}-{aid}")
+    public String deleteOrderArtikel(@PathVariable("oid") int order_id, @PathVariable("aid") int artikel_id, Model model/*, @ModelAttribute Order_Artikel order_artikel*/) {
+        if (orderArtikelService.isOrder_ArtikelExistById(order_id, artikel_id)) {
+            orderArtikelService.deleteOrder_Artikel(order_id, artikel_id);
         }
 
-        model.addAttribute("orderArtikelForm", order_artikel);
-        model.addAttribute("errorMessage", "Ein Fehler ist aufgetreten!");
-        return "deleteOrderArtikel";
+        return "redirect:/api/order/updateOrder/" + order_id;
     }
 
     @PostMapping(value = "/updateOrderArtikel")
     public String updateOrderArtikel(Model model, @ModelAttribute Order_Artikel order_artikel) {
         if (orderArtikelService.isOrder_ArtikelExistById(order_artikel.getOrderid().getOrderid(), order_artikel.getArtikelid().getArtikelid()) && order_artikel.getMenge() > 0) {
             orderArtikelService.updateOrder_Artikel(order_artikel);
-            return "redirect:/api/order";
+            return "redirect:/api/order/updateOrder/" + order_artikel.getOrderid().getOrderid();
+        } else if (order_artikel.getMenge() < 0) {
+            model.addAttribute("orderArtikelForm", order_artikel);
+            model.addAttribute("errorMessage", "Menge zu klein!");
+            model.addAttribute("appName", appName);
+            return "updateOrderArtikel";
         }
 
         model.addAttribute("orderArtikelForm", order_artikel);
         model.addAttribute("errorMessage", "Ein Fehler ist aufgetreten!");
+        model.addAttribute("appName", appName);
         return "updateOrderArtikel";
     }
 }
