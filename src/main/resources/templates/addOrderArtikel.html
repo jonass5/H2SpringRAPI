@@ -59,17 +59,17 @@
                     th:utext="${errorMessage}"></h5>
                 <form method="POST"
                       th:action="@{/api/orderArtikel/addOrderArtikel}" th:object="${orderArtikelForm}">
-                    OrderID:
+                    OrderID
                     <br/>
                     <input class="text-readonly" readonly="readonly" th:field="*{orderid.orderid}" type="text"/><br/>
 
                     <br>
-                    ArtikelID:
+                    ArtikelID
                     <br/>
                     <input th:field="*{artikelid.artikelid}" type="text"/><br/>
 
                     <br>
-                    Menge:
+                    Menge
                     <br/>
                     <input th:field="*{menge}" type="text"/><br/>
 

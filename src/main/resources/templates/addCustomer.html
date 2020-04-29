@@ -59,17 +59,17 @@
                     th:utext="${errorMessage}"></h5>
                 <form method="POST"
                       th:action="@{/api/customer/addCustomer}" th:object="${customerForm}">
-                    Name:
+                    Name
                     <br/>
                     <input th:field="*{name}" type="text"/><br/>
 
                     <br/>
-                    Nachname:
+                    Nachname
                     <br/>
                     <input th:field="*{nachname}" type="text"/><br/>
 
                     <br/>
-                    Alter:
+                    Alter
                     <br/>
                     <input th:field="*{age}" type="text"/><br/>
 

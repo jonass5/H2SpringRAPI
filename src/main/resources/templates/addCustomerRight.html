@@ -60,7 +60,7 @@
                     th:utext="${errorMessage}"></h5>
                 <form method="POST"
                       th:action="@{/api/customerRight/addCustomerRight}" th:object="${customerRightForm}">
-                    Name:
+                    Name
                     <br/>
                     <input th:field="*{name}" type="text"/><br/>
 

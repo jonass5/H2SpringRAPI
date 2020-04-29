@@ -59,11 +59,11 @@
                     th:utext="${errorMessage}"></h5>
                 <form th:action="@{/api/customerRight/updateCustomerRight}"
                       th:method="POST" th:object="${customerRightForm}">
-                    CustomerRightID:
+                    CustomerRightID
                     <br/>
                     <input class="text-readonly" readonly="readonly" th:field="*{customerrightid}" type="text"/><br/>
                     <br/>
-                    Name:
+                    Name
                     <br/>
                     <input th:field="*{name}" type="text"/><br/>
 

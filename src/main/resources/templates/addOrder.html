@@ -60,7 +60,7 @@
                     th:utext="${errorMessage}"></h5>
                 <form method="POST"
                       th:action="@{/api/order/addOrder}" th:object="${orderForm}">
-                    CustomerID:
+                    CustomerID
                     <br/>
                     <input th:field="*{customer.customerid}" type="text"/><br/>
 

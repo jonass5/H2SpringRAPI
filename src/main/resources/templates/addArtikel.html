@@ -60,12 +60,12 @@
                     th:utext="${errorMessage}"></h5>
                 <form method="POST"
                       th:action="@{/api/artikel/addArtikel}" th:object="${artikelForm}">
-                    Name:
+                    Name
                     <br/>
                     <input th:field="*{name}" type="text"/><br/>
 
                     <br/>
-                    Preis:
+                    Preis
                     <br/>
                     <input th:field="*{preis}" type="text"/><br/>
 

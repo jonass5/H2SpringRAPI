@@ -59,27 +59,27 @@
                     th:utext="${errorMessage}"></h5>
                 <form th:action="@{/api/customer/updateCustomer}"
                       th:method="POST" th:object="${customerForm}">
-                    ID:
+                    CustomerID
                     <br/>
                     <input class="text-readonly" readonly="readonly" th:field="*{customerid}" type="text"/><br/>
 
                     <br/>
-                    Name:
+                    Name
                     <br/>
                     <input th:field="*{name}" type="text"/><br/>
 
                     <br/>
-                    Nachname:
+                    Nachname
                     <br/>
                     <input th:field="*{nachname}" type="text"/><br/>
 
                     <br/>
-                    Alter:
+                    Alter
                     <br/>
                     <input th:field="*{age}" type="text"/><br/>
 
                     <br/>
-                    RechteID (0 = keine Rechte):
+                    RechteID (0 = keine Rechte)
                     <br/>
                     <input th:field="*{customerRights.customerrightid}" type="text"/><br/>
 

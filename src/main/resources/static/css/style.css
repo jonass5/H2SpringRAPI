@@ -163,6 +163,115 @@ body {
   background-color: #272B30;
 }
 
+input[type=text] {
+  border: none;
+  padding-left: 6px;
+  padding-right: 6px;
+  border-bottom: 1px solid white;
+  background-color: #515960;
+  color: white;
+}
+
+input[type="text"]:focus:not(.text-readonly) {
+    border-bottom: 2px solid white;
+    outline:none !important;
+    animation: changeBackgroundColorInputText 4s ease-in-out infinite;
+}
+
+input[type="text"]:hover:not(:focus):not(.text-readonly) {
+    border-bottom: 2px solid white;
+}
+
+@keyframes changeBackgroundColorInputText
+{
+ 0%{
+    background-color: #515960;
+ }
+ 50%{
+    background-color: #A9A9A9;
+ }
+ 100%{
+      background-color: #515960;
+   }
+}
+
+@keyframes changeBackgroundColorInputSubmit
+{
+ 0%{
+    background-color: darkgreen;
+ }
+ 50%{
+    background-color: green;
+ }
+ 100%{
+      background-color: darkgreen;
+   }
+}
+
+@keyframes changeBackgroundColorInputUpdate
+{
+ 0%{
+    background-color: darkblue;
+ }
+ 50%{
+    background-color: blue;
+ }
+ 100%{
+      background-color: darkblue;
+   }
+}
+
+.button-create:hover{
+    border: 0.5px solid white;
+    animation: changeBackgroundColorInputSubmit 4s ease-in-out infinite;
+}
+
+.button-update:hover{
+    border: 0.5px solid white;
+    animation: changeBackgroundColorInputUpdate 4s ease-in-out infinite;
+}
+
+.button-create {
+  background-color: #00FF00;
+  border: none;
+  color: white;
+  padding: 10px 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button-cancel {
+  background-color: #FF0000;
+  border: none;
+  color: white;
+  padding: 10px 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button-cancel:hover {
+    background-color: #ffcccb;
+    border: 0.5px solid white;
+    animation: changeBackgroundColorCancel 4s ease-in-out infinite;
+ }
+
+@keyframes changeBackgroundColorCancel
+{
+ 0%{
+    background-color: darkred;
+ }
+ 50%{
+    background-color: red;
+ }
+ 100%{
+      background-color: darkred;
+   }
+}
+
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
@@ -270,8 +379,8 @@ a {
 }
 
 a:hover {
-  color: #d9d9d9;
-  text-decoration: underline;
+  color: white;
+  text-decoration: none;
 }
 
 a:not([href]) {
@@ -333,37 +442,15 @@ label {
   margin-bottom: 0.5rem;
 }
 
-.button-create {
-  background-color: #00FF00;
-  border: none;
-  color: white;
-  padding: 10px 40px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-}
-
-.button-cancel {
-  background-color: #FF0000;
-  border: none;
-  color: white;
-  padding: 10px 40px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-}
-
 .text-readonly{
  background: #B8B8B8;
  borderless;
- border:2px solid #B8B8B8;
+ border:2px solid white !important;
 }
 
 input.text-readonly:focus {
-    outline-width: 0;
-}
+     outline-width: 0;
+ }
 
 .button-update {
   background-color: #0000FF;
@@ -515,6 +602,7 @@ h1, h2, h3, h4, h5, h6,
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
+  color: white;
 }
 
 h1, .h1 {
@@ -5226,6 +5314,7 @@ input[type="button"].btn-block {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.6);
   border-radius: 0.25rem;
+  color: white;
 }
 
 .card > hr {
@@ -5277,6 +5366,7 @@ input[type="button"].btn-block {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
   background-color: #515960;
+  color: white;
   border-bottom: 1px solid rgba(0, 0, 0, 0.6);
 }
 
