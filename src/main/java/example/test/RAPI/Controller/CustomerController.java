@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,6 +22,24 @@ public class CustomerController {
 
     @Value("${spring.application.name}")
     String appName;
+
+//    @Autowired
+//    CustomerCreateValidator customerCreateValidator;
+//
+//    @InitBinder
+//    protected void initBinder(WebDataBinder dataBinder) {
+//        Object target = dataBinder.getTarget();
+//
+//        if (target == null) {
+//            return;
+//        }
+//
+//        System.out.println("!!! Target=" + target + " !!!");
+//
+//        if (target.getClass() == Customer.class) {
+//            dataBinder.setValidator(customerCreateValidator);
+//        }
+//    }
 
     @GetMapping
     public String getAllCustomer(Model model) {
@@ -45,18 +64,40 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/addCustomer")
-    public String createCustomer(Model model, @Valid @ModelAttribute Customer customer, BindingResult result) {
-        if (customer.getName() != null && customer.getName().length() > 0 && customer.getNachname() != null && customer.getNachname().length() > 0 && customer.getAge() > 0) {
-            if (customer.getCustomerRights() != null && customer.getCustomerRights().getCustomerrightid() != 1) {
-                customer.setCustomerRights(null);
+    public String createCustomer(Model model, @ModelAttribute @Valid Customer customer, BindingResult result) {
+        if (result.hasErrors()) {
+            String errorResult = "";
+            for (ObjectError object : result.getAllErrors()) {
+                System.out.println(result.getFieldErrorCount());
+                errorResult += object.getDefaultMessage() + "<br>";
             }
-            customerService.createCustomer(customer);
-            return "redirect:/api/customer";
+
+            model.addAttribute("errorMessage", errorResult);
+            model.addAttribute("customerForm", customer);
+            model.addAttribute("appName", appName);
+
+            return "addCustomer";
         }
-        model.addAttribute("errorMessage", "ein Fehler ist aufgetreten");
-        model.addAttribute("customerForm", customer);
-        model.addAttribute("appName", appName);
-        return "addCustomer";
+//        try {
+//        if (customer.getName() != null && customer.getName().length() > 0 && customer.getNachname() != null && customer.getNachname().length() > 0 && customer.getAge() > 0) {
+        if (customer.getCustomerRights() != null && customer.getCustomerRights().getCustomerrightid() != 1) {
+            customer.setCustomerRights(null);
+        }
+        customerService.createCustomer(customer);
+        return "redirect:/api/customer";
+//        }
+
+//        model.addAttribute("errorMessage", "Ein unbekannter Fehler ist aufgetreten");
+//        model.addAttribute("customerForm", customer);
+//        model.addAttribute("appName", appName);
+//        return "addCustomer";
+
+//        } catch (Exception e) {
+//            model.addAttribute("errorMessage", "Ein unbekannter Fehler ist aufgetreten");
+//            model.addAttribute("customerForm", customer);
+//            model.addAttribute("appName", appName);
+//            return "addCustomer";
+//        }
     }
 
     @GetMapping(value = "/deleteCustomer/{id}")

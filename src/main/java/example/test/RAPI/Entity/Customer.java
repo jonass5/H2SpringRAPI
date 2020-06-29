@@ -6,6 +6,10 @@ import example.test.RAPI.JsonDeserializer.CustomerJsonDeserialize;
 import example.test.RAPI.JsonSerializer.CustomerJsonSerializer;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.Set;
 
 @Entity
@@ -19,6 +23,7 @@ public class Customer {
     @Column(name = "CUSTOMERID")
     private int customerid;
 
+    @NotBlank(message = "{NotBlank.customer.name}")
     @Column(name = "NAME")
     private String name;
 
@@ -26,9 +31,14 @@ public class Customer {
         this.customerid = customerid;
     }
 
+    @NotBlank(message = "{NotBlank.customer.nachname}")
     @Column(name = "NACHNAME")
+//    @Pattern(message = "{NotDigit.customer.nachname}", regexp = "\\d+")
     private String nachname;
 
+    @NotNull(message = "{NotNull.customer.age}")
+    @Positive(message = "{Positive.customer.age}")
+    @Digits(message = "{Digits.customer.age}", integer = 3, fraction = 0)
     @Column(name = "AGE")
     private int age;
 
