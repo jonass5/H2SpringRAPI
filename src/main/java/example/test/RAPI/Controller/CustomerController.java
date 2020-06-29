@@ -27,24 +27,6 @@ public class CustomerController {
     @Value("${spring.application.name}")
     String appName;
 
-//    @Autowired
-//    CustomerCreateValidator customerCreateValidator;
-//
-//    @InitBinder
-//    protected void initBinder(WebDataBinder dataBinder) {
-//        Object target = dataBinder.getTarget();
-//
-//        if (target == null) {
-//            return;
-//        }
-//
-//        System.out.println("!!! Target=" + target + " !!!");
-//
-//        if (target.getClass() == Customer.class) {
-//            dataBinder.setValidator(customerCreateValidator);
-//        }
-//    }
-
     @GetMapping
     public String getAllCustomer(Model model) {
         List<Customer> customerlist = customerService.getAllCustomer();
@@ -66,48 +48,34 @@ public class CustomerController {
     public String showUpdateForm(@PathVariable("id") int id, Model model) {
         model.addAttribute("customerForm", customerService.getCustomerById(id));
         model.addAttribute("appName", appName);
+        model.addAttribute("customerrights", customerRightService.getAllCustomerRights());
+        model.addAttribute("selectedright", customerService.getCustomerById(id).getCustomerRights().getCustomerrightid());
+
         return "updateCustomer";
     }
 
     @PostMapping(value = "/addCustomer")
     public String createCustomer(Model model, @ModelAttribute @Valid Customer customer, BindingResult result) {
         if (result.hasErrors()) {
-            String errorResult = "";
+            StringBuilder errorResult = new StringBuilder();
             System.out.println("Total Errors: " + result.getFieldErrorCount());
 
-            for (ObjectError object : result.getAllErrors()) {
-                errorResult += object.getDefaultMessage() + "<br>";
+            for (ObjectError objectError : result.getAllErrors()) {
+                errorResult.append(objectError.getDefaultMessage()).append("<br>");
             }
 
-            model.addAttribute("errorMessage", errorResult);
+            model.addAttribute("errorMessage", errorResult.toString());
             model.addAttribute("customerForm", customer);
             model.addAttribute("appName", appName);
+            model.addAttribute("customerrights", customerRightService.getAllCustomerRights());
 
             return "addCustomer";
         }
-//        try {
-//        if (customer.getName() != null && customer.getName().length() > 0 && customer.getNachname() != null && customer.getNachname().length() > 0 && customer.getAge() > 0) {
 
-//        if (customer.getCustomerRights() != null && customer.getCustomerRights().getCustomerrightid() != 1) {
-//            customer.setCustomerRights(null);
-//        }
         customer.setCustomerRights(customerRightService.getCustomerRightById(customer.getCustomerRights().getCustomerrightid()));
-
         customerService.createCustomer(customer);
+
         return "redirect:/api/customer";
-//        }
-
-//        model.addAttribute("errorMessage", "Ein unbekannter Fehler ist aufgetreten");
-//        model.addAttribute("customerForm", customer);
-//        model.addAttribute("appName", appName);
-//        return "addCustomer";
-
-//        } catch (Exception e) {
-//            model.addAttribute("errorMessage", "Ein unbekannter Fehler ist aufgetreten");
-//            model.addAttribute("customerForm", customer);
-//            model.addAttribute("appName", appName);
-//            return "addCustomer";
-//        }
     }
 
     @GetMapping(value = "/deleteCustomer/{id}")
@@ -122,17 +90,26 @@ public class CustomerController {
 
     @PostMapping(value = "/updateCustomer")
     public String updateCustomer(@Valid @ModelAttribute Customer customer, BindingResult result, Model model) {
-        if (customerService.isCustomerExistById(customer.getCustomerid())) {
-            if (customer.getCustomerRights().getCustomerrightid() == 0) {
-                customer.setCustomerRights(null);
+        if (result.hasErrors()) {
+            StringBuilder errorResult = new StringBuilder();
+            System.out.println("Total Errors: " + result.getFieldErrorCount());
+
+            for (ObjectError objectError : result.getAllErrors()) {
+                errorResult.append(objectError.getDefaultMessage()).append("<br>");
             }
-            customerService.updateCustomer(customer);
-        } else {
-            model.addAttribute("errorMessage", "Die Eingabe war falsch");
+
+            model.addAttribute("errorMessage", errorResult.toString());
             model.addAttribute("customerForm", customer);
             model.addAttribute("appName", appName);
+            model.addAttribute("customerrights", customerRightService.getAllCustomerRights());
+            model.addAttribute("selectedright", customerService.getCustomerById(customer.getCustomerid()).getCustomerRights().getCustomerrightid());
+
             return "updateCustomer";
         }
+
+        customer.setCustomerRights(customerRightService.getCustomerRightById(customer.getCustomerRights().getCustomerrightid()));
+        customerService.updateCustomer(customer);
+
         return "redirect:/api/customer";
     }
 }

@@ -35,15 +35,15 @@ public class Customer {
     @Column(name = "NACHNAME")
     private String nachname;
 
-//    @Size(min = 1, message = "{Size.customer.age}")
-@NotNull(message = "{NotNull.customer.age}")
-@Positive(message = "{Positive.customer.age}")
-@Digits(message = "{Digits.customer.age}", integer = 3, fraction = 0)
-@Column(name = "AGE")
-private int age;
+    @NotNull(message = "{NotNull.customer.age}")
+    @Positive(message = "{Positive.customer.age}")
+    @Digits(message = "{Digits.customer.age}", integer = 3, fraction = 0)
+    @Column(name = "AGE")
+    private int age;
 
     @ManyToOne
     @JoinColumn(name = "customerrightid")
+    @NotNull(message = "{NotNull.customer.right}")
     private CustomerRight customerRights;
 
     public void setCustomerid(int customerid) {

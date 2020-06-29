@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -53,28 +56,46 @@ public class CustomerRightController {
     }
 
     @PostMapping(value = "/addCustomerRight")
-    public String createCustomerRight(Model model, @ModelAttribute CustomerRight customerRight) {
-        if (!customerRight.getName().trim().equalsIgnoreCase("")) {
-            customerRightService.createCustomerRight(customerRight);
-            return "redirect:/api/customerRight";
+    public String createCustomerRight(Model model, @ModelAttribute @Valid CustomerRight customerRight, BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errorResult = new StringBuilder();
+            System.out.println("Total Errors: " + result.getFieldErrorCount());
+
+            for (ObjectError objectError : result.getAllErrors()) {
+                errorResult.append(objectError.getDefaultMessage()).append("<br>");
+            }
+
+            model.addAttribute("errorMessage", errorResult.toString());
+            model.addAttribute("customerRightForm", new CustomerRight()/*customerRight*/);
+            model.addAttribute("appName", appName);
+
+            return "addCustomerRight";
         }
 
-        model.addAttribute("errorMessage", "ein Fehler ist aufgetreten");
-        model.addAttribute("customerRightFrom", customerRight);
-        model.addAttribute("appName", appName);
-        return "addCustomerRight";
+        customerRightService.createCustomerRight(customerRight);
+
+        return "redirect:/api/customerRight";
     }
 
     @PostMapping(value = "/updateCustomerRight")
-    public String updateCustomerRight(Model model, @ModelAttribute CustomerRight customerRight) {
-        if (customerRightService.isCustomerRightExistById(customerRight.getCustomerrightid()) && !customerRight.getName().trim().equalsIgnoreCase("")) {
-            customerRightService.updateCustomerRight(customerRight);
-            return "redirect:/api/customerRight";
+    public String updateCustomerRight(Model model, @ModelAttribute @Valid CustomerRight customerRight, BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errorResult = new StringBuilder();
+            System.out.println("Total Errors: " + result.getFieldErrorCount());
+
+            for (ObjectError object : result.getAllErrors()) {
+                errorResult.append(object.getDefaultMessage()).append("<br>");
+            }
+
+            model.addAttribute("errorMessage", errorResult.toString());
+            model.addAttribute("customerRightForm", customerRight);
+            model.addAttribute("appName", appName);
+
+            return "updateCustomerRight";
         }
 
-        model.addAttribute("errorMessage", "ein Fehler ist aufgetreten");
-        model.addAttribute("customerRightFrom", customerRight);
-        model.addAttribute("appName", appName);
-        return "updateCustomerRight";
+        customerRightService.updateCustomerRight(customerRight);
+
+        return "redirect:/api/customerRight";
     }
 }

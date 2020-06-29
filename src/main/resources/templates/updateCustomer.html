@@ -78,10 +78,22 @@
                     <br/>
                     <input th:field="*{age}" type="text"/><br/>
 
+                    <!--                    <br/>-->
+                    <!--                    RechteID (0 = keine Rechte)-->
+                    <!--                    <br/>-->
+                    <!--                    <input th:field="*{customerRights.customerrightid}" type="text"/><br/>-->
                     <br/>
-                    RechteID (0 = keine Rechte)
+                    Rechte
                     <br/>
-                    <input th:field="*{customerRights.customerrightid}" type="text"/><br/>
+                    <select class="select-css" th:field="*{customerRights.customerrightid}">
+                        <option class="select-css"
+                                th:each="right : ${customerrights}"
+                                th:selected="${right.customerrightid} == ${selectedright}"
+                                th:text="${right.name}"
+                                th:value="${right.customerrightid}">
+                        </option>
+                    </select>
+                    <br/>
 
                     <br/>
                     <input class="button-update" type="submit" value="Update"/><a class="pull right button-cancel"

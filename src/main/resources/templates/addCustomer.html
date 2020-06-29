@@ -74,9 +74,12 @@
                     <input th:field="*{age}" type="text"/><br/>
 
                     <br/>
-                    <select class="custom-select" th:field="*{customerRights.customerrightid}">
+                    Rechte
+                    <br/>
+                    <select class="select-css" th:field="*{customerRights.customerrightid}">
                         <option th:each="right : ${customerrights}"
                                 th:text="${right.name}"
+                                class="select-css"
                                 th:value="${right.customerrightid}">
                         </option>
                     </select>

@@ -6,6 +6,7 @@ import example.test.RAPI.JsonDeserializer.CustomerRightJsonDeserializer;
 import example.test.RAPI.JsonSerializer.CustomerRightsJsonSerializer;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
@@ -30,6 +31,7 @@ public class CustomerRight {
     @OneToMany(mappedBy = "customerid")
     private Set<Customer> customers;
 
+    @NotBlank(message = "{NotBlank.customerright.name}")
     @Column(name = "NAME")
     private String name;
 
