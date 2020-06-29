@@ -1,6 +1,7 @@
 package example.test.RAPI.Controller;
 
 import example.test.RAPI.Entity.Customer;
+import example.test.RAPI.Service.CustomerRightService;
 import example.test.RAPI.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,9 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    CustomerRightService customerRightService;
 
     @Value("${spring.application.name}")
     String appName;
@@ -53,6 +57,8 @@ public class CustomerController {
     public String showAddCustomer(Model model) {
         model.addAttribute("customerForm", new Customer());
         model.addAttribute("appName", appName);
+        model.addAttribute("customerrights", customerRightService.getAllCustomerRights());
+
         return "addCustomer";
     }
 
@@ -67,8 +73,9 @@ public class CustomerController {
     public String createCustomer(Model model, @ModelAttribute @Valid Customer customer, BindingResult result) {
         if (result.hasErrors()) {
             String errorResult = "";
+            System.out.println("Total Errors: " + result.getFieldErrorCount());
+
             for (ObjectError object : result.getAllErrors()) {
-                System.out.println(result.getFieldErrorCount());
                 errorResult += object.getDefaultMessage() + "<br>";
             }
 
@@ -80,9 +87,12 @@ public class CustomerController {
         }
 //        try {
 //        if (customer.getName() != null && customer.getName().length() > 0 && customer.getNachname() != null && customer.getNachname().length() > 0 && customer.getAge() > 0) {
-        if (customer.getCustomerRights() != null && customer.getCustomerRights().getCustomerrightid() != 1) {
-            customer.setCustomerRights(null);
-        }
+
+//        if (customer.getCustomerRights() != null && customer.getCustomerRights().getCustomerrightid() != 1) {
+//            customer.setCustomerRights(null);
+//        }
+        customer.setCustomerRights(customerRightService.getCustomerRightById(customer.getCustomerRights().getCustomerrightid()));
+
         customerService.createCustomer(customer);
         return "redirect:/api/customer";
 //        }
@@ -111,7 +121,7 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/updateCustomer")
-    public String updateStudent(@Valid @ModelAttribute Customer customer, BindingResult result, Model model) {
+    public String updateCustomer(@Valid @ModelAttribute Customer customer, BindingResult result, Model model) {
         if (customerService.isCustomerExistById(customer.getCustomerid())) {
             if (customer.getCustomerRights().getCustomerrightid() == 0) {
                 customer.setCustomerRights(null);

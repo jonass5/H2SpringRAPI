@@ -33,14 +33,14 @@ public class Customer {
 
     @NotBlank(message = "{NotBlank.customer.nachname}")
     @Column(name = "NACHNAME")
-//    @Pattern(message = "{NotDigit.customer.nachname}", regexp = "\\d+")
     private String nachname;
 
-    @NotNull(message = "{NotNull.customer.age}")
-    @Positive(message = "{Positive.customer.age}")
-    @Digits(message = "{Digits.customer.age}", integer = 3, fraction = 0)
-    @Column(name = "AGE")
-    private int age;
+//    @Size(min = 1, message = "{Size.customer.age}")
+@NotNull(message = "{NotNull.customer.age}")
+@Positive(message = "{Positive.customer.age}")
+@Digits(message = "{Digits.customer.age}", integer = 3, fraction = 0)
+@Column(name = "AGE")
+private int age;
 
     @ManyToOne
     @JoinColumn(name = "customerrightid")
