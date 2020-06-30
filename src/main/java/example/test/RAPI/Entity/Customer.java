@@ -120,4 +120,8 @@ public class Customer {
     public void setAge(int age) {
         this.age = age;
     }
+
+    public boolean hasRight(String name) {
+        return customerRights.getName().equalsIgnoreCase(name);
+    }
 }

@@ -25,7 +25,7 @@ public class CustomerService {
     }
 
     public boolean isCustomerExistById(int customerid) {
-        return customerRepository.findById(customerid).isPresent();//.orElseThrow(CustomerNotFoundException::new);
+        return customerRepository.findById(customerid).isPresent();
     }
 
     public void createCustomer(Customer c) {

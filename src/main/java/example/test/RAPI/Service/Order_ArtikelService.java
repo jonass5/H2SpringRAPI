@@ -12,6 +12,8 @@ import java.util.List;
 @Service
 public class Order_ArtikelService {
 
+//    public List<Order_Artikel> preOrder_ArtikelList;
+
     @Autowired
     private Order_ArtikelRepository orderArtikelRepository;
 

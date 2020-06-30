@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -53,28 +56,60 @@ public class ArtikelController {
     }
 
     @PostMapping(value = "/addArtikel")
-    public String createArtikel(Model model, @ModelAttribute Artikel artikel) {
-        if (artikel.getName() != null && !artikel.getName().trim().equalsIgnoreCase("") && artikel.getPreis() > 0.0) {
-            artikelService.createArtikel(artikel);
-            return "redirect:/api/artikel";
+    public String createArtikel(Model model, @ModelAttribute @Valid Artikel artikel, BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errorResult = new StringBuilder();
+            System.out.println("Total Errors: " + result.getFieldErrorCount());
+
+            for (ObjectError objectError : result.getAllErrors()) {
+                errorResult.append(objectError.getDefaultMessage()).append("<br>");
+            }
+
+            model.addAttribute("errorMessage", errorResult.toString());
+            model.addAttribute("artikelForm", artikel);
+            model.addAttribute("appName", appName);
+
+            return "addArtikel";
         }
 
-        model.addAttribute("errorMessage", "Die Eingabe war falsch");
-        model.addAttribute("artikelForm", artikel);
-        model.addAttribute("appName", appName);
-        return "addArtikel";
+
+//        if (artikel.getName() != null && !artikel.getName().trim().equalsIgnoreCase("") && artikel.getPreis() > 0.0) {
+        artikelService.createArtikel(artikel);
+        return "redirect:/api/artikel";
+//        }
+//
+//        model.addAttribute("errorMessage", "Die Eingabe war falsch");
+//        model.addAttribute("artikelForm", artikel);
+//        model.addAttribute("appName", appName);
+//        return "addArtikel";
     }
 
     @PostMapping(value = "/updateArtikel")
-    public String updateArtikel(Model model, @ModelAttribute Artikel artikel) {
-        if (artikelService.isArtikelExistById(artikel.getArtikelid()) && artikel.getName() != null && !artikel.getName().trim().equalsIgnoreCase("") && artikel.getPreis() > 0) {
-            artikelService.updateArtikel(artikel);
-        } else {
-            model.addAttribute("errorMessage", "Die Eingabe war falsch");
+    public String updateArtikel(Model model, @ModelAttribute @Valid Artikel artikel, BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errorResult = new StringBuilder();
+            System.out.println("Total Errors: " + result.getFieldErrorCount());
+
+            for (ObjectError objectError : result.getAllErrors()) {
+                errorResult.append(objectError.getDefaultMessage()).append("<br>");
+            }
+
+            model.addAttribute("errorMessage", errorResult.toString());
             model.addAttribute("artikelForm", artikel);
             model.addAttribute("appName", appName);
+
             return "updateArtikel";
         }
+
+
+//        if (artikelService.isArtikelExistById(artikel.getArtikelid()) && artikel.getName() != null && !artikel.getName().trim().equalsIgnoreCase("") && artikel.getPreis() > 0) {
+        artikelService.updateArtikel(artikel);
+//        } else {
+//            model.addAttribute("errorMessage", "Die Eingabe war falsch");
+//            model.addAttribute("artikelForm", artikel);
+//            model.addAttribute("appName", appName);
+//            return "updateArtikel";
+//        }
         return "redirect:/api/artikel";
     }
 

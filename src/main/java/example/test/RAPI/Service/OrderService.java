@@ -18,6 +18,9 @@ public class OrderService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private Order_ArtikelService orderArtikelService;
+
     public List<Order> getAllOrder() {
         List<Order> list = new ArrayList<>();
         orderRepository.findAll().forEach(list::add);

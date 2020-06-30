@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import example.test.RAPI.JsonDeserializer.OrderJsonDeserializer;
 import example.test.RAPI.JsonSerializer.OrderJsonSerializer;
+import example.test.RAPI.Validator.CustomerIdNotNull;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,9 +22,11 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "CUSTOMERID")
+    @CustomerIdNotNull(message = "{CustomerIdNotNull.order.customer}")
     private Customer customer;
 
     @OneToMany(mappedBy = "orderid")
+//    @CustomerIdNotNull(message = "{IdNotNull.artikelList.artikelList}")
     private List<Order_Artikel> artikelList;
 
     public int getOrderid() {

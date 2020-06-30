@@ -12,6 +12,8 @@
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
           rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 <body>
 
@@ -60,9 +62,20 @@
                     th:utext="${errorMessage}"></h5>
                 <form method="POST"
                       th:action="@{/api/order/addOrder}" th:object="${orderForm}">
-                    CustomerID
+                    <!--                    CustomerID-->
+                    <!--                    <br/>-->
+                    <!--                    <input th:field="*{customer.customerid}" type="text"/><br/>-->
+
+                    Customer
                     <br/>
-                    <input th:field="*{customer.customerid}" type="text"/><br/>
+                    <input list="customer" th:field="*{customer.customerid}" type="text">
+                    <datalist id="customer">
+                        <option th:each="customer : ${customer}"
+                                th:text="${customer.name} + ' ' + ${customer.nachname}"
+                                th:value="${customer.customerid}">
+                        </option>
+                    </datalist>
+                    <br/>
 
                     <br/>
                     <br/>

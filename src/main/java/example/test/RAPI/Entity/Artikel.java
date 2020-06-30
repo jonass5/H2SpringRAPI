@@ -6,6 +6,10 @@ import example.test.RAPI.JsonDeserializer.ArtikelJsonDeserializer;
 import example.test.RAPI.JsonSerializer.ArtikelJsonSerializer;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -23,9 +27,13 @@ public class Artikel {
     private Set<Order_Artikel> orderList;
 
     @Column(name = "NAME")
+    @NotBlank(message = "{NotBlank.artikel.name}")
     private String name;
 
     @Column(name = "PREIS")
+    @NotNull(message = "{NotNull.artikel.preis}")
+    @DecimalMin(value = "0.0", inclusive = true, message = "{DecimalMin.artikel.preis}")
+    @Digits(integer = 99, fraction = 2, message = "{Digits.artikel.preis}")
     private double preis;
 
     public int getArtikelid() {
