@@ -41,11 +41,6 @@ public class OrderContoller {
 
     @GetMapping(value = "/addOrder")
     public String addOrder(Model model) {
-//        orderArtikelService.preOrder_ArtikelList = new ArrayList<>();
-//
-//        Order order = new Order();
-//        order.setArtikelList(orderArtikelService.preOrder_ArtikelList);
-
         model.addAttribute("orderForm", new Order());
         model.addAttribute("appName", appName);
         model.addAttribute("customer", customerService.getAllCustomer());
@@ -80,18 +75,10 @@ public class OrderContoller {
                 errorResult.append(objectError.getDefaultMessage()).append("<br>");
             }
 
-//            if (!customerService.isCustomerExistById(order.getCustomer().getCustomerid())) {
-//                errorResult.append("Dieser Kunde existiert nicht!");
-//            } //else if (!customerService.getCustomerById(order.getCustomer().getCustomerid()).hasRight("order.allow")) {
-////                if (!customerService.getCustomerById(order.getCustomer().getCustomerid()).hasRight("order.allow")) {
-//                errorResult.append("Dieser Kunde darf keine Bestellung aufgeben!");
-////                }
-//            }
-
-
             model.addAttribute("errorMessage", errorResult.toString());
             model.addAttribute("orderForm", order);
             model.addAttribute("appName", appName);
+            model.addAttribute("customer", customerService.getAllCustomer());
 
             return "addOrder";
         } else if (!customerService.getCustomerById(order.getCustomer().getCustomerid()).hasRight("order.allow")) {
@@ -100,6 +87,7 @@ public class OrderContoller {
             model.addAttribute("errorMessage", errorResult.toString());
             model.addAttribute("orderForm", order);
             model.addAttribute("appName", appName);
+            model.addAttribute("customer", customerService.getAllCustomer());
 
             return "addOrder";
         }
@@ -107,17 +95,6 @@ public class OrderContoller {
         orderService.createOrder(order);
 
         return "redirect:/api/order";
-//        } else {
-//            model.addAttribute("orderForm", order);
-//            model.addAttribute("errorMessage", "The customer may not create an order");
-//            model.addAttribute("appName", appName);
-//            return "addOrder";
-//        }
-//    }
-//        model.addAttribute("orderForm",order);
-//        model.addAttribute("errorMessage","Ein Fehler ist aufgetreten!");
-//        model.addAttribute("appName",appName);
-//        return"addOrder";
     }
 
     @PostMapping(value = "/updateOrder")
@@ -142,7 +119,7 @@ public class OrderContoller {
             model.addAttribute("orderForm", order);
             model.addAttribute("appName", appName);
 
-            return "addOrder";
+            return "updateOrder";
         }
 
         orderService.updateOrder(order);
